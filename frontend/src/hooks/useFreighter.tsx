@@ -1,1 +1,1 @@
-export { useFreighterContext as useFreighter } from "../state/FreighterContext";
+export { useStellarWalletContext as useFreighter } from "../state/StellarWalletContext";
