@@ -121,6 +121,9 @@
     "totalPoints": "Total points",
     "missionsCompleted": "Missions completed",
     "eventsAttended": "Events attended",
+    "recentCompleted": "Recently completed",
+    "noCompleted": "You haven't completed any missions yet.",
+    "completeMissionsHint": "Complete missions to start earning points.",
     "currentRank": "Current rank",
     "recentActivity": "Recent activity",
     "upcomingMissions": "Upcoming missions",
@@ -137,7 +140,13 @@
     "titlePlaceholder": "Title",
     "pointsPlaceholder": "Points",
     "descriptionPlaceholder": "Description",
-    "noneInCategory": "No badges in this category"
+    "noneInCategory": "No badges in this category",
+    "rarity": {
+      "common": "Common",
+      "uncommon": "Uncommon",
+      "epic": "Epic",
+      "legendary": "Legendary"
+    }
   },
   "missions": {
     "title": "Missions",
@@ -220,6 +229,12 @@
       "text": "text",
       "image": "image",
       "placeholder": "Paste the link, write the text, or file name"
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "step1": "Choose the mission you completed",
+      "step2": "Select the proof type (link, text or image)",
+      "step3": "Submit the proof and wait for admin approval"
     }
   },
   "checkin": {
@@ -269,7 +284,13 @@
     "website": "Website",
     "socialMedia": "Social media",
     "joinedDate": "Join date",
-    "lastLogin": "Last login"
+    "lastLogin": "Last login",
+    "loginToView": "Please login to view your profile.",
+    "missionsHistory": "Missions history",
+    "eventsHistory": "Events history",
+    "noHistory": "You haven't completed any missions yet.",
+    "noEvents": "You haven't attended any events yet.",
+    "onchainReputation": "On-chain reputation"
   },
   "admin": {
     "title": "Administration",
@@ -305,6 +326,7 @@
     "cannotGetAddress": "Could not get wallet address.",
     "connecting": "Connecting...",
     "chooseWallet": "Choose a wallet:",
-    "modalTitle": "Connect Stellar Wallet"
+    "modalTitle": "Connect Stellar Wallet",
+    "disconnect": "Disconnect"
   }
 }

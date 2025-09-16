@@ -10,6 +10,8 @@ export function MissionSubmissionsPage() {
   const { toast } = useToast()
   const [error, setError] = useState<string>('')
   const { t } = useTranslation()
+  const params = new URLSearchParams(window.location.search)
+  const preselect = params.get('missionId') || ''
 
   if (!user) return <div>{t('submissions.loginToSubmit')}</div>
 
@@ -42,10 +44,18 @@ export function MissionSubmissionsPage() {
   const available = missions.filter((m) => m.status === 'ativa')
 
   return (
-    <div className="max-w-xl">
+    <div className="max-w-xl space-y-4">
       <h1 className="text-2xl font-bold text-yellow-400 mb-4">{t('submissions.title')}</h1>
+      <div className="card p-3 text-sm text-zinc-300">
+        <div className="font-semibold mb-1">{t('submissions.howItWorks.title')}</div>
+        <ol className="list-decimal pl-5 space-y-1">
+          <li>{t('submissions.howItWorks.step1')}</li>
+          <li>{t('submissions.howItWorks.step2')}</li>
+          <li>{t('submissions.howItWorks.step3')}</li>
+        </ol>
+      </div>
       <form className="space-y-3" onSubmit={onSubmit}>
-        <select name="missionId" className="input" required>
+        <select name="missionId" className="input" defaultValue={preselect} required>
           <option value="">{t('submissions.selectMission')}</option>
           {available.map((m) => (
             <option key={m.id} value={m.id}>{m.title} ({m.points} pts)</option>

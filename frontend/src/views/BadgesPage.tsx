@@ -35,11 +35,21 @@ export function BadgesPage() {
     e.currentTarget.reset()
   }
 
-  function defineBadgeColor(rarity: string) {
-    if (rarity === 'epic') return 'blue';
-    else if (rarity === 'legendary') return 'orange';
-    else if (rarity === 'rare') return 'green';
-    else return 'green'
+  // Map badge rarity to color and label (bilingual via i18n)
+  function mapRarity(rarity: string) {
+    // azul -> comum, verde -> incomum, vermelho -> épico, amarelo -> lendário
+    switch (rarity) {
+      case 'common':
+        return { color: 'blue', label: t('badges.rarity.common') }
+      case 'uncommon':
+        return { color: 'green', label: t('badges.rarity.uncommon') }
+      case 'epic':
+        return { color: 'red', label: t('badges.rarity.epic') }
+      case 'legendary':
+        return { color: 'yellow', label: t('badges.rarity.legendary') }
+      default:
+        return { color: 'blue', label: t('badges.rarity.common') }
+    }
   }
 
   return (
@@ -71,12 +81,13 @@ export function BadgesPage() {
       <div className='grid md:grid-cols-3 lg:grid-cols-5 gap-6'>
         {badges.length === 0 ? (
           <EmptyState title={t('badges.noneInCategory')} />
-        ) : badges.map((badge) => (
-          <BadgeCard color={defineBadgeColor(badge.rarity)} title={badge.title} subtitle={badge.subtitle} progress={badge.progress} daysLeft={badge.daysLeft}/>
-        ))}
-        <BadgeCard color={'green'} title={'Teste'} subtitle={'Subteste'} progress={50} daysLeft={2}/>
-        <BadgeCard color={'red'} title={'Teste'} subtitle={'Subteste'} progress={50} daysLeft={2}/>
-        <BadgeCard color={'red'} title={'Teste'} subtitle={'Subteste'} progress={50} daysLeft={2}/>
+        ) : badges.map((badge) => {
+          const { color, label } = mapRarity(badge.rarity)
+          const subtitle = badge.subtitle || ''
+          return (
+            <BadgeCard key={badge.id} color={color} title={badge.title} subtitle={subtitle} progress={badge.progress} daysLeft={badge.daysLeft} rarityLabel={label}/>
+          )
+        })}
       </div>
       {/* <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
         {visible.length === 0 ? (

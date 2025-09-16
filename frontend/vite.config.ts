@@ -16,7 +16,18 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['buffer', 'process'],
+    include: [
+      'buffer',
+      'process',
+      '@stellar/stellar-sdk/contract',
+      '@stellar/stellar-sdk/rpc'
+    ],
+  },
+  server: {
+    fs: {
+      // allow serving files from project root and its parent (for local bindings under /contract)
+      allow: ['..']
+    }
   },
   build: {
     rollupOptions: {

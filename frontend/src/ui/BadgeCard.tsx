@@ -7,6 +7,7 @@ interface BadgeCardProps {
   subtitle: string,
   progress: number,
   daysLeft?: number | null,
+  rarityLabel?: string,
 }
 
 const BadgeCard = ({ 
@@ -14,12 +15,18 @@ const BadgeCard = ({
   title, 
   subtitle, 
   progress, 
-  daysLeft = null
+  daysLeft = null,
+  rarityLabel
 }: BadgeCardProps) => {
   return (
     <div className={`bcard ${color}`}>
       <header className="bcard-header">
         <div className="date">Feb 2, 2025</div>
+        {rarityLabel && (
+          <div className="rarity-pill">
+            {rarityLabel}
+          </div>
+        )}
       </header>
       <div className="bcard-body">
         <h3>{title}</h3>

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../state/AuthContext'
-import { Trophy } from 'lucide-react'
+//
 import { useTranslation } from '../i18n/hooks/useTranslation'
 
 export function LoginPage() {
@@ -25,7 +25,7 @@ export function LoginPage() {
     <div className="min-h-screen grid md:grid-cols-2 bg-black text-white">
       <div className="hidden md:flex items-center justify-center bg-zinc-950 border-r border-zinc-900">
         <div className="max-w-md p-10 text-center">
-          <Trophy size={48} className="text-yellow-400 mx-auto" />
+          <img src="/logo.jpeg" alt="Logo" className="h-16 w-auto mx-auto object-contain" />
           <h1 className="mt-4 text-4xl font-extrabold leading-tight">
             InfluenceHub
             <span className="block text-yellow-400"></span>

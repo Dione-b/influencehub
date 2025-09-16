@@ -6,12 +6,14 @@ import type { Mission, MissionStatus, MissionType } from '../state/types'
 import { Target } from 'lucide-react'
 import { PageHeader, Badge, EmptyState } from '../ui/Primitives'
 import { useTranslation } from '../i18n/hooks/useTranslation'
+import { useNavigate } from 'react-router-dom'
 
 export function MissionsPage() {
   const { user } = useAuth()
   const { missions, addMission, updateMission, removeMission } = useData()
   const [filter, setFilter] = useState<'ativas' | 'todas'>('ativas')
   const { t } = useTranslation()
+  const navigate = useNavigate()
 
   const visible = useMemo(() => missions.filter((m) => (filter === 'ativas' ? m.status === 'ativa' : true)), [missions, filter])
 
@@ -72,7 +74,12 @@ export function MissionsPage() {
         {visible.length === 0 ? (
           <EmptyState title={t('missions.noneInCategory')} />
         ) : visible.map((m) => (
-          <div key={m.id} className={`border border-zinc-800 rounded-xl p-4 flex flex-col gap-2 ${m.status === 'encerrada' ? 'bg-zinc-600 opacity-75' : 'bg-zinc-900'}`}>
+          <button
+            key={m.id}
+            onClick={() => navigate(`/app/submissoes?missionId=${encodeURIComponent(m.id)}`)}
+            className={`text-left border border-zinc-800 rounded-xl p-4 flex flex-col gap-2 hover:border-yellow-400 transition-colors ${m.status === 'encerrada' ? 'bg-zinc-600 opacity-75 cursor-not-allowed' : 'bg-zinc-900'}`}
+            disabled={m.status === 'encerrada'}
+          >
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-bold">{m.title}</h3>
               <Badge color="yellow">{m.points} pts</Badge>
@@ -84,13 +91,13 @@ export function MissionsPage() {
             </div>
             {isAdmin && (
               <div className="flex gap-2 mt-2">
-                <button className="btn bg-zinc-800 text-xs py-2" onClick={() => updateMission(m.id, { status: m.status === 'ativa' ? 'encerrada' : 'ativa' })}>
+                <button className="btn bg-zinc-800 text-xs py-2" onClick={(e) => { e.stopPropagation(); updateMission(m.id, { status: m.status === 'ativa' ? 'encerrada' : 'ativa' }) }}>
                   {m.status === 'ativa' ? t('missions.close') : t('missions.reopen')}
                 </button>
-                <button className="btn bg-red-600 text-xs py-2" onClick={() => removeMission(m.id)}>{t('common.delete')}</button>
+                <button className="btn bg-red-600 text-xs py-2" onClick={(e) => { e.stopPropagation(); removeMission(m.id) }}>{t('common.delete')}</button>
               </div>
             )}
-          </div>
+          </button>
         ))}
       </div>
     </div>
