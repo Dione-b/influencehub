@@ -16,7 +16,6 @@ InfluenceHub gamifies performance: every action becomes XP → Badges → Levels
 
 - **Near-zero fees** → ideal for micropayments
 - **Global and inclusive infrastructure**
-- **Stellar Development Foundation (SDF) support**
 - **Soroban just launched** — we're pioneers bringing gamification and tokenized reputation for creators to this stack
 
 ## 🏗️ Technical Architecture
@@ -25,22 +24,22 @@ InfluenceHub gamifies performance: every action becomes XP → Badges → Levels
 
 #### ReputationContract
 - **Function**: Gamified reputation system for creators
-- **Features**:
-  - `initialize(admin)`: Initializes contract with administrator
-  - `reward_with_tokens(user, amount, token)`: Rewards creator with XP based on engagement
-  - `get_level(user)`: Returns creator level based on accumulated XP
-  - `mint_badge(user, badge_type)`: Issues badges for specific achievements
-- **Security**: 1M XP limit per transaction, overflow protection
-- **Gamification**: Level system based on XP (1-4+ levels)
+- **Public methods (current ABI)**:
+  - `initialize(admin)`
+  - `reward_with_price_check(user, amount, token, oracle_id)`
+  - `reward_with_tokens(user, amount, _token)`
+  - `get_level(user) -> u32`
+- **Security**: XP cap per tx and overflow protections
+- **Gamification**: Level system based on XP
 
-#### InfluenceHub Token ($INFLU)
+#### Kale Token ($KALE)
 - **Function**: Native fungible token of the ecosystem
 - **Features**:
   - Implements Stellar-compatible token standard
   - Admin-controlled minting
   - Integration with reputation system
   - Automatic payments to creators
-- **Specifications**: 18 decimals, symbol "INFLU"
+- **Specifications**: 18 decimals, symbol "KALE"
 - **Utility**: Access to premium campaigns, exclusive analytics, Pro subscription
 
 ### Frontend (React + TypeScript)
@@ -68,7 +67,7 @@ InfluenceHub gamifies performance: every action becomes XP → Badges → Levels
 
 ### Automatic Rewards
 - **Micropayments**: XLM paid automatically when hitting goals
-- **$INFLU Tokens**: For access to premium features
+- **$KALE Tokens**: For access to premium features
 - **Exclusive Campaigns**: Premium brand access by level
 - **Advanced Analytics**: Detailed performance data
 
@@ -135,6 +134,47 @@ pnpm dev
 # Access http://localhost:5173
 ```
 
+#### Soroban bindings (Reputation contract) in the frontend
+
+We consume the generated bindings directly from the contracts workspace. The client is wrapped in `frontend/src/soroban/reputationClient.ts`.
+
+Minimal example:
+
+```ts
+import { Networks } from '@stellar/stellar-sdk';
+import { Client as ReputationClient } from '../../contract/contracts/reputation_contract/soroban-bindings/src';
+
+const client = new ReputationClient({
+  contractId: 'CDOLWY7CVGFCT66A2TSXYKBEVFD4GAWWU2IC26YTE5QWFFSP2LGVUB37',
+  networkPassphrase: Networks.TESTNET,
+  rpcUrl: 'https://soroban-testnet.stellar.org',
+});
+
+// view
+const tx = await client.get_level({ user: 'G...PUBLIC_KEY' });
+console.log('level', tx.result);
+
+// write (sign + send): reward with price verification via oracle
+await client
+  .reward_with_price_check({
+    user: 'G...PUBLIC_KEY',
+    amount: BigInt(500),
+    token: 'CD...TOKEN_CONTRACT_ID',
+    oracle_id: 'CDPP6IXK73UMODNZZW7RT6ILZI25KQHIHHMDKL27VB5IQUZBAWOR25BV',
+  })
+  .signAndSend();
+```
+
+Already configured helpers live in `frontend/src/soroban/reputationClient.ts`:
+
+```ts
+import { getReputationLevel, rewardWithPriceCheck } from '../soroban/reputationClient';
+```
+
+Vite adjustments (already applied):
+- `vite.config.ts` includes `@stellar/stellar-sdk/contract` and `/rpc` in `optimizeDeps.include` and allows reading from `../contract`.
+- Ensure `@stellar/stellar-sdk` version `^14.1.1` or newer.
+
 ### Smart Contracts
 ```bash
 cd contract
@@ -149,9 +189,9 @@ soroban contract deploy \
   --wasm target/wasm32-unknown-unknown/release/reputation_contract.wasm \
   --source-account <your-account>
 
-# Deploy INFLU token
+# Deploy KALE token (adjust the wasm path to your token build artifact)
 soroban contract deploy \
-  --wasm target/wasm32-unknown-unknown/release/influencehub.wasm \
+  --wasm <path-to-your-kale-token-wasm> \
   --source-account <your-account>
 ```
 
@@ -189,6 +229,19 @@ influencehub/
 └── README.md                  # This file
 ```
 
+## 🔗 Reflector Oracle Integration
+
+`reward_with_price_check` validates rewards against a trusted oracle (Reflector) on Soroban. Pass the oracle contract id as `oracle_id` when rewarding. The binding uses snake_case, so if you pass camelCase in app code map it accordingly (already handled in `reputationClient.ts`).
+
+Typical flow:
+- App (off-chain) collects engagement metrics
+- Reflector oracle publishes/verifies price/metric data on-chain
+- App calls `reward_with_price_check(user, amount, token, oracle_id)` to mint XP-backed rewards only when the oracle validation succeeds
+
+## 📱 On‑chain Reputation in the UI
+
+The Profile page shows an “On‑chain reputation” card. When a wallet is connected, it queries `get_level(user)` through the generated client and displays the result.
+
 ## 🎯 Technologies
 
 ### Blockchain & Smart Contracts
@@ -209,21 +262,47 @@ influencehub/
 - **Analytics**: On-chain + off-chain data
 - **Payments**: XLM for automatic micropayments
 
+## ✅ Implemented vs 🧭 Roadmap
+
+### Implemented now
+- Reputation contract (Soroban)
+  - `initialize`, `get_level`, `reward_with_tokens`, `reward_with_price_check`
+  - Testnet deployment ready (example contract id in code)
+- Frontend (React + TS)
+  - Wallet connection (Freighter/Wallets Kit)
+  - On-chain reputation card in `ProfilePage` using generated bindings
+  - Soroban binding wired via `frontend/src/soroban/reputationClient.ts`
+  - Vite configured to resolve `@stellar/stellar-sdk/contract` and `/rpc`
+- Token economics
+  - Token placeholder updated to KALE ($KALE)
+
+### Roadmap (to be implemented)
+- Oracle (Reflector) end-to-end
+  - Production oracle contract and publishing pipeline
+  - UI flows to trigger price/metric checked rewards
+- Token ($KALE)
+  - Deploy KALE token contract and integrate mint/transfer flows
+  - Rewards paid out in KALE where applicable
+- Additional views
+  - Campaign marketplace, advanced analytics, full ranking UX polish
+- Multi-wallet UX and persistent session/auto-reconnect
+- CI/CD, audit, and production hardening
+
 ## 🎮 Demo Users
 
 ### Content Creator
-- **Email**: `creator@influencehub.com`
+- **Email**: `creator@influencehub.life`
 - **Password**: `creator123`
 - **Level**: 3 (Influencer)
 - **XP**: 750 points
 
 ### Brand/Advertiser
-- **Email**: `brand@influencehub.com`
+- **Email**: `brand@influencehub.life`
 - **Password**: `brand123`
 - **Type**: Premium campaigns
 
 ### Admin
-- **Email**: `admin@influencehub.com`
+- **Email**: `admin@influencehub.life`
 - **Password**: `admin123`
 - **Access**: Full platform control
 
@@ -237,10 +316,10 @@ We're capturing real value from a **$100B market** — tokenizing reputation, au
 
 ## 📞 Contact
 
-- **Website**: [influencehub.com](https://influencehub.com)
+- **Website**: [influencehub.life](https://influencehub.life)
 - **Twitter**: [@InfluenceHub](https://twitter.com/influencehub)
 - **Discord**: [InfluenceHub Community](https://discord.gg/influencehub)
-- **Email**: hello@influencehub.com
+- **Email**: hello@influencehub.life
 
 ---
 

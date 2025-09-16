@@ -1,4 +1,4 @@
-import React from 'react';
+//
 import '../ui/BadgeCard.css'
 
 interface BadgeCardProps {

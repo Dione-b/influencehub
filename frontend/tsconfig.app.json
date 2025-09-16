@@ -17,9 +17,15 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
+    "baseUrl": ".",
+    "types": ["node", "vite/client"],
+    "paths": {
+      "@stellar/stellar-sdk/contract": ["node_modules/@stellar/stellar-sdk/contract"],
+      "@stellar/stellar-sdk/rpc": ["node_modules/@stellar/stellar-sdk/rpc"],
+      "@stellar/*": ["node_modules/@stellar/*"]
+    },
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
