@@ -224,7 +224,7 @@ export const FreighterProvider: React.FC<{ children: React.ReactNode }> = ({
               : !!(isAllowedResp as any)?.isAllowed;
 
           if (!installed) {
-            alert("Freighter não está instalado. Instale a extensão para continuar.");
+            alert(typeof window !== 'undefined' ? (window as any).i18next?.t?.('wallet.freighterNotInstalled') ?? 'Freighter not installed' : 'Freighter not installed');
             return null;
           }
 
@@ -251,7 +251,7 @@ export const FreighterProvider: React.FC<{ children: React.ReactNode }> = ({
 
             if (allowedNow === false)
               alert("Permission denied in the Freighter extension. 2222");
-            else alert("Não foi possível obter o endereço da carteira.");
+            else alert(typeof window !== 'undefined' ? (window as any).i18next?.t?.('wallet.cannotGetAddress') ?? 'Could not get wallet address' : 'Could not get wallet address');
             return null;
           }
           console.log("Freighter connected. Address:", pk);

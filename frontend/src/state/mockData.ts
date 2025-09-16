@@ -12,7 +12,7 @@ export const MOCK_USERS: UserProfile[] = [
   {
     id: 'u2',
     name: 'Influenciador Alpha',
-    email: 'embaixador@exemplo.com',
+    email: 'influenciador@exemplo.com',
     password: 'senha123',
     role: 'INFLUENCER',
     totalPoints: 350,

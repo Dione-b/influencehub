@@ -1,4 +1,5 @@
 import { createContext, useContext, useMemo, useState } from 'react'
+import { useTranslation } from '../i18n/hooks/useTranslation'
 import type {
   AttendanceRecord,
   Badge,
@@ -32,6 +33,7 @@ interface DataContextValue {
 const DataContext = createContext<DataContextValue | undefined>(undefined)
 
 export function DataProvider({ children }: { children: React.ReactNode }) {
+  // Translation not directly usable here (outside React tree), so we won't use t() at runtime in this provider.
   const [missions, setMissions] = useState<Mission[]>([...MOCK_MISSIONS])
   const [badges, setBadges] = useState<Badge[]>([...MOCK_BADGES])
   const [events, setEvents] = useState<EventItem[]>([...MOCK_EVENTS])
@@ -69,7 +71,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     );
 
     if (existingSubmission) {
-      throw new Error('Você já submeteu esta missão anteriormente');
+      throw new Error('submissions.alreadySubmitted');
     }
 
     setSubmissions((prev) => [

@@ -9,7 +9,7 @@ export function LoginPage() {
   const navigate = useNavigate()
   const location = useLocation() as { state?: { from?: string } }
   const { t } = useTranslation()
-  const [email, setEmail] = useState('embaixador@exemplo.com')
+  const [email, setEmail] = useState('influenciador@exemplo.com')
   const [password, setPassword] = useState('senha123')
   const [error, setError] = useState<string | null>(null)
 
@@ -47,7 +47,7 @@ export function LoginPage() {
             </div>
             {error && <div className="text-red-400 text-sm">{error}</div>}
             <button className="btn btn-primary w-full text-base py-3" type="submit">{t('auth.login')}</button>
-            <p className="text-xs text-zinc-400">Mock: embaixador@exemplo.com / senha123</p>
+            <p className="text-xs text-zinc-400">Mock: influenciador@exemplo.com / senha123</p>
             <p className="text-xs text-zinc-400">Mock: admin@exemplo.com / admin123</p>
             <p className="text-sm text-zinc-400">{t('auth.dontHaveAccount')} <Link className="text-yellow-400" to="/cadastrar">{t('auth.signUp')}</Link></p>
           </form>

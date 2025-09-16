@@ -260,7 +260,7 @@ export const StellarWalletProvider: React.FC<{ children: React.ReactNode }> = ({
             }
             resolve(null);
           },
-          modalTitle: "Conectar Carteira Stellar",
+          modalTitle: (typeof window !== 'undefined' ? (window as any).i18next?.t?.('wallet.modalTitle') : undefined) || 'Stellar Wallet Connection',
           notAvailableText: "Nenhuma carteira disponível",
         });
 
@@ -386,7 +386,7 @@ export const StellarWalletProvider: React.FC<{ children: React.ReactNode }> = ({
           }
         },
         horizonUrl: options?.horizonUrl,
-        buttonText: options?.buttonText || "Conectar Carteira",
+        buttonText: options?.buttonText || ((typeof window !== 'undefined' ? (window as any).i18next?.t?.('profile.connectWallet') : undefined) || 'Connect Wallet'),
       });
     } catch (e: any) {
       if (e.message?.includes('already created')) {

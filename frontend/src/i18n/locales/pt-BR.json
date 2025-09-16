@@ -44,7 +44,8 @@
     "checkin": "Check-in",
     "quickLinks": "Links Rápidos",
     "contact": "Contato",
-    "allRightsReserved": "Todos os direitos reservados"
+    "allRightsReserved": "Todos os direitos reservados",
+    "add": "Adicionar"
   },
   "landing": {
     "officialProgram": "Programa Oficial",
@@ -109,10 +110,14 @@
     "passwordRequired": "Senha é obrigatória",
     "passwordMinLength": "Senha deve ter pelo menos 6 caracteres",
     "passwordsDontMatch": "Senhas não coincidem",
-    "nameRequired": "Nome é obrigatório"
+    "nameRequired": "Nome é obrigatório",
+    "emailAlreadyUsed": "Email já cadastrado",
+    "createAccount": "Crie sua conta",
+    "joinProgram": "Participe do programa de influenciadores."
   },
   "dashboard": {
     "welcome": "Bem-vindo",
+    "subtitle": "Bem-vindo ao seu painel de influenciador.",
     "totalPoints": "Total de pontos",
     "missionsCompleted": "Missões completadas",
     "eventsAttended": "Eventos participados",
@@ -126,8 +131,17 @@
     "viewEvents": "Ver eventos",
     "viewRanking": "Ver ranking"
   },
+  "badges": {
+    "title": "Emblemas",
+    "create": "Criar emblema",
+    "titlePlaceholder": "Título",
+    "pointsPlaceholder": "Pontuação",
+    "descriptionPlaceholder": "Descrição",
+    "noneInCategory": "Nenhum emblema nessa categoria"
+  },
   "missions": {
     "title": "Missões",
+    "availableTitle": "Missões Disponíveis",
     "available": "Disponíveis",
     "completed": "Completadas",
     "pending": "Pendentes",
@@ -146,7 +160,19 @@
     "noMissions": "Nenhuma missão encontrada",
     "missionSubmitted": "Missão submetida com sucesso!",
     "missionUpdated": "Missão atualizada com sucesso!",
-    "missionDeleted": "Missão excluída com sucesso!"
+    "missionDeleted": "Missão excluída com sucesso!",
+    "submitMission": "Submeter missão",
+    "active": "Ativas",
+    "closed": "Encerradas",
+    "all": "Todas",
+    "create": "Criar missão",
+    "titlePlaceholder": "Título",
+    "pointsPlaceholder": "Pontuação",
+    "descriptionPlaceholder": "Descrição",
+    "event": "evento",
+    "noneInCategory": "Nenhuma missão nessa categoria",
+    "close": "Encerrar",
+    "reopen": "Reabrir"
   },
   "events": {
     "title": "Eventos",
@@ -163,9 +189,48 @@
     "checkinSuccess": "Check-in realizado com sucesso!",
     "checkinError": "Erro ao fazer check-in",
     "noEvents": "Nenhum evento encontrado",
+    "available": "Eventos Disponíveis",
+    "noneNow": "Nenhum evento disponível no momento.",
     "eventCreated": "Evento criado com sucesso!",
     "eventUpdated": "Evento atualizado com sucesso!",
     "eventDeleted": "Evento excluído com sucesso!"
+  },
+  "approvals": {
+    "title": "Aprovações de Missões",
+    "onlyAdmins": "Somente administradores.",
+    "nonePending": "Nenhuma submissão pendente.",
+    "id": "ID",
+    "userId": "UserID",
+    "proof": "Comprovação",
+    "status": "Status",
+    "approveBtn": "Aprovar",
+    "rejectBtn": "Rejeitar",
+    "approveSuccess": "Missão aprovada",
+    "rejectSuccess": "Submissão rejeitada"
+  },
+  "submissions": {
+    "loginToSubmit": "Faça login para submeter missões.",
+    "sentForApproval": "Submissão enviada para a aprovação",
+    "submitError": "Erro ao submeter missão",
+    "alreadySubmitted": "Você já submeteu esta missão anteriormente",
+    "title": "Submeter missão",
+    "selectMission": "Selecione uma missão",
+    "proof": {
+      "link": "link",
+      "text": "texto",
+      "image": "imagem",
+      "placeholder": "Cole o link, escreva o texto ou nome do arquivo"
+    }
+  },
+  "checkin": {
+    "loginToCheckin": "Faça login para registrar presença.",
+    "success": "Check-in registrado no evento {{event}}",
+    "invalidCode": "Código inválido",
+    "title": "Check-in em Eventos",
+    "description": "Faça check-in nos eventos para ganhar pontos.",
+    "withCode": "Check-in com Código",
+    "codePlaceholder": "Digite o código do evento",
+    "doCheckin": "Fazer Check-in"
   },
   "ranking": {
     "title": "Ranking",
@@ -195,6 +260,7 @@
     "statistics": "Estatísticas",
     "editProfile": "Editar perfil",
     "saveChanges": "Salvar alterações",
+    "connectWallet": "Conectar Carteira",
     "profileUpdated": "Perfil atualizado com sucesso!",
     "avatar": "Avatar",
     "bio": "Biografia",
@@ -232,5 +298,13 @@
     "pleaseTryAgain": "Por favor, tente novamente",
     "sessionExpired": "Sessão expirada",
     "pleaseLogin": "Por favor, faça login novamente"
+  }
+  ,
+  "wallet": {
+    "freighterNotInstalled": "Freighter não está instalado. Instale a extensão para continuar.",
+    "cannotGetAddress": "Não foi possível obter o endereço da carteira.",
+    "connecting": "Conectando...",
+    "chooseWallet": "Escolha uma carteira:",
+    "modalTitle": "Conectar Carteira Stellar"
   }
 }
