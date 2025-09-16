@@ -1,6 +1,6 @@
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../state/AuthContext'
-import { LayoutDashboard, User2, Target, CalendarDays, Trophy, LogOut } from 'lucide-react'
+import { LayoutDashboard, User2, Target, CalendarDays, Trophy, LogOut, Send } from 'lucide-react'
 import { useTranslation } from '../i18n/hooks/useTranslation'
 import { LanguageSelector } from './LanguageSelector'
 
@@ -19,12 +19,12 @@ export function Layout() {
       <aside className="bg-black/80 backdrop-blur border-r border-zinc-900 flex flex-col">
         <div className="px-6 py-6">
           <Link to="/" className="block">
-            <div className="text-2xl leading-tight font-extrabold text-yellow-400">Blockchain<br/>Ambassadors</div>
+            <div className="text-2xl leading-tight font-extrabold text-yellow-400">InfluenceHub<br/></div>
           </Link>
           {user && (
             <div className="mt-4 text-sm">
               <div className="font-semibold">{user.name}</div>
-              <div className="text-zinc-400">{user.role === 'ADMIN' ? t('admin.title') : t('common.ambassador')}</div>
+              <div className="text-zinc-400">{user.role === 'ADMIN' ? t('admin.title') : t('common.influencer')}</div>
             </div>
           )}
         </div>
@@ -32,6 +32,8 @@ export function Layout() {
           <SidebarLink to="/app" end icon={<LayoutDashboard size={18} />} label={t('common.dashboard')} />
           <SidebarLink to="/app/perfil" icon={<User2 size={18} />} label={t('common.profile')} />
           <SidebarLink to="/app/missoes" icon={<Target size={18} />} label={t('common.missions')} />
+          <SidebarLink to="/app/submissoes" icon={<Send size={18} />} label={t('common.submissions')} />
+          <SidebarLink to="/app/emblemas" icon={<Target size={18} />} label={t('common.badges')} />
           <SidebarLink to="/app/checkin" icon={<CalendarDays size={18} />} label={t('common.events')} />
           <SidebarLink to="/app/ranking" icon={<Trophy size={18} />} label={t('common.ranking')} />
           {user?.role === 'ADMIN' && (

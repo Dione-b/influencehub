@@ -42,7 +42,7 @@ export interface TranslationKeys {
     approvals: string
     submissions: string
     checkin: string
-    ambassador: string
+    influencer: string
     quickLinks: string
     contact: string
     allRightsReserved: string
@@ -73,14 +73,14 @@ export interface TranslationKeys {
     tutorialsDesc: string
     studyGroup: string
     studyGroupDesc: string
-    whyAmbassador: string
+    whyInfluencer: string
     buildCommunity: string
     buildCommunityDesc: string
     gamification: string
     gamificationDesc: string
     recognition: string
     recognitionDesc: string
-    topAmbassadors: string
+    topInfluencers: string
     viewFullRanking: string
     upcomingEvents: string
     doCheckin: string
@@ -174,18 +174,18 @@ export interface TranslationKeys {
     name: string
     points: string
     level: string
-    ambassador: string
+    influencer: string
     admin: string
-    topAmbassadors: string
+    topInfluencers: string
     yourPosition: string
     noRanking: string
     description: string
-    totalAmbassadors: string
+    totalInfluencers: string
     top3: string
     noData: string
     fullRanking: string
     showing: string
-    ambassadors: string
+    influencers: string
     joinUs: string
     joinUsDesc: string
   }

@@ -1,8 +1,29 @@
 @import "tailwindcss";
 
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0turn;
+  inherits: false;
+}
+
 :root {
   --color-bg: #000000;
   --color-accent: #FFC107;
+  --color-error: oklch(50.5% 0.213 27.518);
+  --golden-gradient: linear-gradient(#584827, #2d230f),
+    conic-gradient(
+      from var(--gradient-angle),
+      #584827 0%,
+      #c7a03c 37%,
+      #f9de90 30%,
+      #c7a03c 33%,
+      #584827 40%,
+      #584827 50%,
+      #c7a03c 77%,
+      #f9de90 80%,
+      #c7a03c 83%,
+      #584827 90%
+    );
 }
 
 html, body, #root {
@@ -66,6 +87,11 @@ h3 { font-size: 1.125rem; }
 .btn-ghost { @apply bg-transparent text-zinc-300 border border-transparent; }
 .btn-ghost:hover { @apply bg-zinc-900; }
 
+.btn-has-error {
+  background-color: var(--color-error);
+  color: #ffffff;
+}
+
 .input {
   @apply w-full px-4 py-3 rounded-md bg-zinc-950/70 border border-zinc-800 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 backdrop-blur;
 }
@@ -73,6 +99,15 @@ h3 { font-size: 1.125rem; }
 .card {
   @apply rounded-xl p-5 border border-zinc-800 bg-zinc-950/60 backdrop-blur transition-all;
   box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 20px 40px rgba(0,0,0,0.35);
+}
+
+.top-1 {
+  animation: 2s gradient-angle infinite linear;
+  border: 2px solid transparent;
+  background-image: var(--golden-gradient);
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  border-radius: 20px;
 }
 
 .card:hover { transform: translateY(-2px); border-color: #a1a1aa; }
@@ -97,4 +132,10 @@ a:hover { filter: brightness(1.1); }
 /* Motion reduction */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+@keyframes gradient-angle {
+  to {
+    --gradient-angle: 1turn;
+  }
 }

@@ -7,11 +7,11 @@ export function RankingPage() {
   const { t } = useTranslation()
   
   const ranking = [...MOCK_USERS]
-    .filter((u) => u.role === 'EMBASSADOR')
+    .filter((u) => u.role === 'INFLUENCER')
     .sort((a, b) => b.totalPoints - a.totalPoints)
 
   return (
-    <div className="max-w-6xl mx-auto px-6 space-y-12">
+    <div className="max-w-7xl mx-auto px-6 space-y-12">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
@@ -28,7 +28,7 @@ export function RankingPage() {
           </div>
         </div>
         <div className="text-right">
-          <div className="text-sm text-zinc-400">{t('ranking.totalAmbassadors')}</div>
+          <div className="text-sm text-zinc-400">{t('ranking.totalInfluencers')}</div>
           <div className="text-2xl font-bold text-yellow-400">{ranking.length}</div>
         </div>
       </div>
@@ -56,7 +56,7 @@ export function RankingPage() {
 
           {/* 1st Place */}
           <div className="order-1 md:order-2">
-            <div className="card text-center relative border-2 border-yellow-400 p-10">
+            <div className="card top-1 text-center relative border-2 border-yellow-400 p-10">
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                 <div className="w-16 h-16 rounded-full bg-yellow-400 flex items-center justify-center">
                   <Crown className="text-black w-8 h-8" />
@@ -95,7 +95,7 @@ export function RankingPage() {
         <div className="flex items-center justify-between mb-8">
           <h3 className="text-xl font-bold">{t('ranking.fullRanking')}</h3>
           <div className="text-sm text-zinc-400">
-            {t('ranking.showing')} {ranking.length} {t('ranking.ambassadors')}
+            {t('ranking.showing')} {ranking.length} {t('ranking.influencers')}
           </div>
         </div>
         
@@ -128,7 +128,7 @@ export function RankingPage() {
                   </td>
                   <td className="py-5 px-6">
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-800 text-zinc-300">
-                      {t('ranking.ambassador')}
+                      {t('ranking.influencer')}
                     </span>
                   </td>
                   <td className="py-5 px-6 text-right">

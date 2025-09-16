@@ -27,8 +27,8 @@ export function LoginPage() {
         <div className="max-w-md p-10 text-center">
           <Trophy size={48} className="text-yellow-400 mx-auto" />
           <h1 className="mt-4 text-4xl font-extrabold leading-tight">
-            Blockchain
-            <span className="block text-yellow-400">Ambassadors</span>
+            InfluenceHub
+            <span className="block text-yellow-400"></span>
           </h1>
           <p className="mt-3 text-zinc-400">{t('landing.heroDescription')}</p>
         </div>

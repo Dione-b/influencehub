@@ -32,7 +32,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       name,
       email,
       password,
-      role: 'EMBASSADOR',
+      role: 'INFLUENCER',
       totalPoints: 0,
     }
     MOCK_USERS.push(newUser)

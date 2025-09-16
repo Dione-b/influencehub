@@ -1,4 +1,4 @@
-import type { FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
 import { useAuth } from '../state/AuthContext'
 import { useData } from '../state/DataContext'
 import { useToast } from '../ui/ToastContext'
@@ -7,20 +7,31 @@ export function MissionSubmissionsPage() {
   const { user } = useAuth()
   const { missions, submitMission } = useData()
   const { toast } = useToast()
+  const [error, setError] = useState<string>('')
 
   if (!user) return <div>Faça login para submeter missões.</div>
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
+
     if (!user) return
+    
     const form = e.currentTarget as HTMLFormElement & {
       missionId: { value: string }
       proofType: { value: 'link' | 'text' | 'image' }
       proofValue: { value: string }
     }
-    submitMission({ userId: user.id, missionId: form.missionId.value, proofType: form.proofType.value, proofValue: form.proofValue.value })
-    e.currentTarget.reset()
-    toast('Submissão enviada para aprovação', 'success')
+    
+    try {
+      submitMission({ userId: user.id, missionId: form.missionId.value, proofType: form.proofType.value, proofValue: form.proofValue.value })
+      
+      e.currentTarget.reset()
+      toast('Submissão enviada para a aprovação', 'success')
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Erro ao submeter missão'
+      setError(errorMessage)
+      toast(errorMessage, 'error')
+    }
   }
 
   const available = missions.filter((m) => m.status === 'ativa')
@@ -41,7 +52,9 @@ export function MissionSubmissionsPage() {
           <option value="image">imagem</option>
         </select>
         <input name="proofValue" className="input" placeholder="Cole o link, escreva o texto ou nome do arquivo" required />
-        <button className="btn btn-primary w-full" type="submit">Enviar</button>
+        <button className={`btn w-full ${error ? 'btn-has-error' : 'btn-primary'}`} type="submit">
+          Enviar
+        </button>
       </form>
     </div>
   )

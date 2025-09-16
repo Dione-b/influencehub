@@ -26,7 +26,7 @@ export function RegisterPage() {
         <div className="max-w-md p-10 text-center">
           <UserPlus2 size={48} className="text-yellow-400 mx-auto" />
           <h1 className="mt-4 text-4xl font-extrabold leading-tight">Crie sua conta</h1>
-          <p className="mt-3 text-zinc-400">Participe do programa de embaixadores.</p>
+          <p className="mt-3 text-zinc-400">Participe do programa de influenciadores.</p>
         </div>
       </div>
       <div className="flex items-center justify-center p-8">

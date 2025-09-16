@@ -45,6 +45,15 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   }
 
   function submitMission(submission: Omit<MissionSubmission, 'id' | 'status' | 'date'> & { proofValue: string }) {
+    const existingSubmission = submissions.find(
+      sub => sub.userId === submission.userId && 
+            sub.missionId === submission.missionId
+    );
+
+    if (existingSubmission) {
+      throw new Error('Você já submeteu esta missão anteriormente');
+    }
+
     setSubmissions((prev) => [
       ...prev,
       {

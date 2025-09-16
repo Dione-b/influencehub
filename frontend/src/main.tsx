@@ -11,7 +11,7 @@ import { PublicLayout } from './ui/PublicLayout'
 import { RequireAuth } from './ui/RequireAuth'
 import { LoginPage } from './views/LoginPage'
 import { RegisterPage } from './views/RegisterPage'
-import { AmbassadorDashboard } from './views/AmbassadorDashboard'
+import { InfluencerDashboard } from './views/InfluencerDashboard'
 import { AdminDashboard } from './views/AdminDashboard'
 import { ProfilePage } from './views/ProfilePage'
 import { MissionsPage } from './views/MissionsPage'
@@ -22,6 +22,8 @@ import { CheckinPage } from './views/CheckinPage'
 import { RankingPage } from './views/RankingPage'
 import { LandingPage } from './views/LandingPage'
 import { ToastProvider } from './ui/ToastContext'
+import { BadgesPage } from './views/BadgesPage'
+import { FreighterProvider } from './state/FreighterContext'
 
 const router = createBrowserRouter([
   // Rotas públicas (fora do Layout/Sidebar)
@@ -47,10 +49,11 @@ const router = createBrowserRouter([
       </RequireAuth>
     ),
     children: [
-      { index: true, element: <AmbassadorDashboard /> },
+      { index: true, element: <InfluencerDashboard /> },
       { path: 'admin', element: <AdminDashboard /> },
       { path: 'perfil', element: <ProfilePage /> },
       { path: 'missoes', element: <MissionsPage /> },
+      { path: 'emblemas', element: <BadgesPage /> },
       { path: 'submissoes', element: <MissionSubmissionsPage /> },
       { path: 'aprovacoes', element: <ApprovalsPage /> },
       { path: 'eventos', element: <EventsPage /> },
@@ -63,11 +66,13 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
-      <DataProvider>
-        <ToastProvider>
-          <RouterProvider router={router} />
-        </ToastProvider>
-      </DataProvider>
+      <FreighterProvider>
+        <DataProvider>
+          <ToastProvider>
+            <RouterProvider router={router} />
+          </ToastProvider>
+        </DataProvider>
+      </FreighterProvider>
     </AuthProvider>
   </StrictMode>,
 )

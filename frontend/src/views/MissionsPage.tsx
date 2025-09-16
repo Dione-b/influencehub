@@ -40,6 +40,7 @@ export function MissionsPage() {
       <div className="flex items-center justify-between">
         <PageHeader icon={<Target />} title="Missões Disponíveis" />
         <div className="flex gap-2 text-sm">
+          <button className={`btn btn-primary`} onClick={() => window.location.href = '/app/submissoes'}>Submeter missão</button>
           <button className={`btn ${filter === 'ativas' ? 'btn-primary' : 'bg-zinc-900'}`} onClick={() => setFilter('ativas')}>Ativas</button>
           <button className={`btn ${filter === 'todas' ? 'btn-primary' : 'bg-zinc-900'}`} onClick={() => setFilter('todas')}>Todas</button>
         </div>
@@ -69,13 +70,13 @@ export function MissionsPage() {
         {visible.length === 0 ? (
           <EmptyState title="Nenhuma missão nessa categoria" />
         ) : visible.map((m) => (
-          <div key={m.id} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex flex-col gap-2">
+          <div key={m.id} className={`border border-zinc-800 rounded-xl p-4 flex flex-col gap-2 ${m.status === 'encerrada' ? 'bg-zinc-600 opacity-75' : 'bg-zinc-900'}`}>
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-bold">{m.title}</h3>
               <Badge color="yellow">{m.points} pts</Badge>
             </div>
             <p className="text-sm text-zinc-300 leading-5">{m.description}</p>
-            <div className="flex items-center gap-2 text-[11px]">
+            <div className={`flex items-center gap-2 text-[11px]`}>
               <Badge color={m.type === 'evento' ? 'green' : 'blue'}>{m.type}</Badge>
               <Badge>{m.status}</Badge>
             </div>

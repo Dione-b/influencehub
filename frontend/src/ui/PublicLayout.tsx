@@ -18,7 +18,7 @@ export function PublicLayout() {
         <div className="max-w-6xl mx-auto px-6 py-8">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
-              <div className="text-2xl font-extrabold text-yellow-400 mb-4">Blockchain Ambassadors</div>
+              <div className="text-2xl font-extrabold text-yellow-400 mb-4">InfluenceHub</div>
               <p className="text-zinc-400 text-sm">
                 {t('landing.heroDescription')}
               </p>
@@ -40,13 +40,12 @@ export function PublicLayout() {
             <div>
               <h3 className="font-semibold mb-4">{t('common.contact')}</h3>
               <div className="space-y-2 text-sm text-zinc-400">
-                <div>contato@blockchainambassadors.com</div>
-                <div>Discord: blockchainambassadors</div>
+                <div>contato@influencehub.com</div>
               </div>
             </div>
           </div>
           <div className="border-t border-zinc-800 mt-8 pt-6 text-center text-sm text-zinc-500">
-            © 2024 Blockchain Ambassadors. {t('common.allRightsReserved')}
+            © 2025 InfluenceHub. {t('common.allRightsReserved')}
           </div>
         </div>
       </footer>

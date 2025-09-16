@@ -1,14 +1,14 @@
-# Blockchain Ambassadors DApp
+# Blockchain InfluenceHub DApp
 
-Este projeto é uma aplicação web desenvolvida com **React**, **TypeScript** e **Vite** para gerenciar um programa de embaixadores de blockchain. O sistema permite que administradores criem missões e eventos, enquanto embaixadores podem participar, submeter provas de participação e acumular pontos para subir no ranking.
+Este projeto é uma aplicação web desenvolvida com **React**, **TypeScript** e **Vite** para gerenciar um programa de influenciadores de blockchain. O sistema permite que administradores criem missões e eventos, enquanto influenciadores podem participar, submeter provas de participação e acumular pontos para subir no ranking.
 
 ## Funcionalidades
 
-- **Autenticação:** Login e cadastro de usuários (embaixadores e administradores).
-- **Dashboard:** Painel personalizado para embaixadores e administradores.
+- **Autenticação:** Login e cadastro de usuários (influenciadores e administradores).
+- **Dashboard:** Painel personalizado para influenciadores e administradores.
 - **Missões:** Listagem, criação (admin), submissão e aprovação de missões.
 - **Eventos:** Gerenciamento de eventos, check-in com código e histórico de participação.
-- **Ranking:** Visualização dos embaixadores mais ativos.
+- **Ranking:** Visualização dos influenciadores mais ativos.
 - **Perfil:** Histórico de missões e eventos do usuário.
 
 ## Estrutura de Pastas
