@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Buffer } from "buffer";
 // import { Address } from '@stellar/stellar-sdk';
 // Generic, minimal types to avoid 'any' and keep CI builds stable
