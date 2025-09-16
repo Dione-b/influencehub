@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { Buffer } from "buffer";
+import * as Stellar from '@stellar/stellar-sdk';
 // import { Address } from '@stellar/stellar-sdk';
 // Generic, minimal types to avoid 'any' and keep CI builds stable
 type u32 = number;
@@ -20,10 +21,13 @@ interface MethodOptions {
   simulate?: boolean;
 }
 // Keep runtime imports; typing is relaxed above
-import { Client as ContractClient, Spec as ContractSpec } from '@stellar/stellar-sdk/contract';
+// Import directly from built path to avoid subpath resolution issues in CI
+const contractNS: any = (Stellar as any).contract;
+const ContractClient = contractNS?.Client;
+const ContractSpec = contractNS?.Spec;
 // (types provided above)
 export * from '@stellar/stellar-sdk'
-export * as contract from '@stellar/stellar-sdk/contract'
+// Removed re-export of contract subpath to prevent bundler resolution errors
 // Avoid importing rpc in the frontend build path to prevent subpath resolution issues
 
 if (typeof window !== 'undefined') {

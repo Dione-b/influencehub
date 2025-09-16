@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import path from 'node:path'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
@@ -13,6 +14,7 @@ export default defineConfig({
       process: 'process/browser',
       stream: 'stream-browserify',
       util: 'util',
+      '@stellar/stellar-sdk/contract': path.resolve(__dirname, 'node_modules/@stellar/stellar-sdk/contract'),
     },
   },
   optimizeDeps: {
@@ -31,6 +33,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
+      // Prevent bundler from failing if resolving from outside root; keep it bundled
       external: [],
     },
   },
