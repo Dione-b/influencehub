@@ -1,11 +1,26 @@
 import { Buffer } from "buffer";
 // import { Address } from '@stellar/stellar-sdk';
-import type { AssembledTransaction, ClientOptions as ContractClientOptions, MethodOptions } from '@stellar/stellar-sdk/contract';
+// Generic, minimal types to avoid 'any' and keep CI builds stable
+type u32 = number;
+type u64 = bigint | string | number;
+interface AssembledTransaction<T = unknown> {
+  result?: T;
+  signAndSend: (...args: unknown[]) => Promise<{ hash?: string; result?: unknown }>;
+  xdr?: string;
+}
+interface ContractClientOptions {
+  contractId: string;
+  networkPassphrase: string;
+  rpcUrl: string;
+}
+interface MethodOptions {
+  fee?: number;
+  timeoutInSeconds?: number;
+  simulate?: boolean;
+}
+// Keep runtime imports; typing is relaxed above
 import { Client as ContractClient, Spec as ContractSpec } from '@stellar/stellar-sdk/contract';
-import type {
-  u32,
-  u64,
-} from '@stellar/stellar-sdk/contract';
+// (types provided above)
 export * from '@stellar/stellar-sdk'
 export * as contract from '@stellar/stellar-sdk/contract'
 // Avoid importing rpc in the frontend build path to prevent subpath resolution issues
@@ -114,20 +129,6 @@ export interface Client {
 
 }
 export class Client extends ContractClient {
-  static async deploy<T = Client>(
-    /** Options for initializing a Client as well as for calling a method, with extras specific to deploying. */
-    options: MethodOptions &
-      Omit<ContractClientOptions, "contractId"> & {
-        /** The hash of the Wasm blob, which must already be installed on-chain. */
-        wasmHash: Buffer | string;
-        /** Salt used to generate the contract's ID. Passed through to {@link Operation.createCustomContract}. Default: random. */
-        salt?: Buffer | Uint8Array;
-        /** The format used to decode `wasmHash`, if it's provided as a string. */
-        format?: "hex" | "base64";
-      }
-  ): Promise<AssembledTransaction<T>> {
-    return ContractClient.deploy(null, options)
-  }
   constructor(public readonly options: ContractClientOptions) {
     super(
       new ContractSpec([ "AAAAAgAAAAAAAAAAAAAAB0RhdGFLZXkAAAAAAgAAAAAAAAAAAAAABUFkbWluAAAAAAAAAQAAAAAAAAACWFAAAAAAAAEAAAAT",
