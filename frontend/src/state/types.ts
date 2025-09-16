@@ -21,6 +21,17 @@ export interface Mission {
   status: MissionStatus
 }
 
+export type BadgeRarity = 'rare' | 'epic' | 'legendary'
+
+export interface Badge {
+  id: string,
+  title: string,
+  subtitle: string,
+  progress: number,
+  daysLeft?: number | null,
+  rarity: BadgeRarity
+}
+
 export interface EventItem {
   id: string
   name: string

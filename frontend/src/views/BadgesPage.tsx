@@ -1,17 +1,15 @@
 import type { FormEvent } from 'react'
-import { useMemo, useState } from 'react'
+//import { useMemo, useState } from 'react'
 import { useAuth } from '../state/AuthContext'
 import { useData } from '../state/DataContext'
-import type { Mission, MissionStatus, MissionType } from '../state/types'
+import type { Badge, BadgeRarity } from '../state/types'
 import { SquareStar } from 'lucide-react'
-import { PageHeader, Badge, EmptyState } from '../ui/Primitives'
+import { PageHeader, EmptyState } from '../ui/Primitives'
+import BadgeCard from '../ui/BadgeCard'
 
 export function BadgesPage() {
   const { user } = useAuth()
-  const { missions, addMission, updateMission, removeMission } = useData()
-  const [filter, setFilter] = useState<'ativas' | 'todas'>('ativas')
-
-  const visible = useMemo(() => missions.filter((m) => (filter === 'ativas' ? m.status === 'ativa' : true)), [missions, filter])
+  const { badges, addBadge } = useData()
 
   const isAdmin = user?.role === 'ADMIN'
 
@@ -19,35 +17,38 @@ export function BadgesPage() {
     e.preventDefault()
     const form = e.currentTarget as HTMLFormElement & {
       title: { value: string }
-      description: { value: string }
-      type: { value: MissionType }
-      points: { value: string }
-      status: { value: MissionStatus }
+      subtitle: { value: string }
+      progress: { value: number }
+      daysLeft: { value: number }
+      rarity: { value:  BadgeRarity}
     }
-    const mission: Omit<Mission, 'id'> = {
+    const badge: Omit<Badge, 'id'> = {
       title: form.title.value,
-      description: form.description.value,
-      type: form.type.value,
-      points: Number(form.points.value || 0),
-      status: form.status.value,
+      subtitle: form.subtitle.value,
+      progress: form.progress.value,
+      rarity: form.rarity.value,
+      daysLeft: Number(form.daysLeft.value || undefined),
     }
-    addMission(mission)
+    addBadge(badge)
     e.currentTarget.reset()
+  }
+
+  function defineBadgeColor(rarity: string) {
+    if (rarity === 'epic') return 'blue';
+    else if (rarity === 'legendary') return 'orange';
+    else if (rarity === 'rare') return 'green';
+    else return 'green'
   }
 
   return (
     <div className="space-y-6 page-root relative z-10">
       <div className="flex items-center justify-between">
         <PageHeader icon={<SquareStar />} title="Emblemas" />
-        <div className="flex gap-2 text-sm">
-          <button className={`btn ${filter === 'ativas' ? 'btn-primary' : 'bg-zinc-900'}`} onClick={() => setFilter('ativas')}>Ativas</button>
-          <button className={`btn ${filter === 'todas' ? 'btn-primary' : 'bg-zinc-900'}`} onClick={() => setFilter('todas')}>Todas</button>
-        </div>
       </div>
 
       {isAdmin && (
         <div className="card p-4">
-          <h2 className="font-semibold mb-2">Criar missão</h2>
+          <h2 className="font-semibold mb-2">Criar emblema</h2>
           <form className="grid grid-cols-1 md:grid-cols-6 gap-3 items-end" onSubmit={onCreate}>
             <input name="title" className="input md:col-span-2 text-sm py-2" placeholder="Título" required />
             <input name="points" className="input text-sm py-2" placeholder="Pontuação" type="number" min={0} required />
@@ -65,9 +66,19 @@ export function BadgesPage() {
         </div>
       )}
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
+      <div className='grid md:grid-cols-3 lg:grid-cols-5 gap-6'>
+        {badges.length === 0 ? (
+          <EmptyState title="Nenhum emblema nessa categoria" />
+        ) : badges.map((badge) => (
+          <BadgeCard color={defineBadgeColor(badge.rarity)} title={badge.title} subtitle={badge.subtitle} progress={badge.progress} daysLeft={badge.daysLeft}/>
+        ))}
+        <BadgeCard color={'green'} title={'Teste'} subtitle={'Subteste'} progress={50} daysLeft={2}/>
+        <BadgeCard color={'red'} title={'Teste'} subtitle={'Subteste'} progress={50} daysLeft={2}/>
+        <BadgeCard color={'red'} title={'Teste'} subtitle={'Subteste'} progress={50} daysLeft={2}/>
+      </div>
+      {/* <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
         {visible.length === 0 ? (
-          <EmptyState title="Nenhuma missão nessa categoria" />
+          <EmptyState title="Nenhuma emblema nessa categoria" />
         ) : visible.map((m) => (
           <div key={m.id} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex flex-col gap-2">
             <div className="flex items-center justify-between">
@@ -89,7 +100,7 @@ export function BadgesPage() {
             )}
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   )
 }

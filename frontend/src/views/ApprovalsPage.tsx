@@ -36,8 +36,11 @@ export function ApprovalsPage() {
               <div key={s.id} className="card space-y-2">
                 <h3 className="font-semibold">{mission?.title}</h3>
                 <div className="text-sm text-zinc-300">
-                  <p>Comprovação ({s.proofType}):</p>
+                  <p>ID: {s.id}</p>
+                  <p>UserID: {s.userId} </p>
+                  <p>Comprovação: ({s.proofType}):</p>
                   <div className="break-all">{s.proofValue}</div>
+                  <p>Status: {s.status}</p>
                 </div>
                 <div className="flex gap-2">
                   <button className="btn bg-green-600" onClick={() => approve(s.id, s.missionId, s.userId)}>Aprovar</button>

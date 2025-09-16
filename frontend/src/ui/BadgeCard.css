@@ -1,0 +1,267 @@
+/* Import font */
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap");
+
+/* Custom properties */
+:root {
+  --clr-blue: #1890ff;
+  --clr-green: #01c3a8;
+  --clr-orange: #ffb741;
+  --clr-red: #a63d2a;
+}
+
+.bcards-container {
+  width: 100%;
+  max-width: 50em;
+  margin: 0 auto;
+  padding: 5em 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3.25rem;
+  position: relative;
+  z-index: 10;
+  align-items: center;
+}
+
+/* Card */
+.bcard {
+  position: relative;
+  z-index: 555;
+  width: 100%;
+  max-width: 20rem;
+  min-height: 20rem;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  box-shadow: 1px 12px 25px rgba(0, 0, 0, 0.78);
+  border-radius: 2.25rem;
+}
+
+.bcard::before {
+  content: "";
+  position: absolute;
+  inset: 0; /* top: 0; right: 0; bottom: 0; left: 0; */
+  border: 0.155rem solid transparent;
+  border-radius: 2.25rem;
+  z-index: -1;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+}
+
+/* Card header */
+.bcard-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0.8em 0.5em 0 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bcard-header .date {
+  color: #ddd;
+}
+
+.bcard-header svg {
+  color: #fff;
+  width: 2.5rem;
+  cursor: pointer;
+}
+
+/* Card body */
+.bcard-body {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  padding: 0.7em 1.25em 0.5em 1.5em;
+  transform: translate(-50%, -50%);
+}
+
+.bcard-body h3 {
+  color: #fff;
+  font-size: 1.375rem;
+  margin: 0.625em 0 0.188em;
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+.bcard-body p {
+  color: #ddd;
+  font-size: 1rem;
+  letter-spacing: 0.031rem;
+}
+
+.progress {
+  margin-top: 0.938rem;
+}
+
+.progress span:first-of-type {
+  color: #fff;
+  font-weight: 600;
+  display: block;
+  text-align: left;
+  margin-bottom: 0.313rem;
+}
+
+.progress span {
+  margin-top: 0.313rem;
+  display: block;
+  text-align: right;
+  color: #fff;
+}
+
+.progress-bar {
+  position: relative;
+  width: 100%;
+  height: 0.313rem;
+  background: #363636;
+  border-radius: 3.125rem;
+}
+
+.progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  border-radius: 3.125rem;
+  display: block;
+}
+
+/* Card footer */
+.bcard-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.7em 1.25em 0.5em 1.5em;
+  background: #151419;
+  border-top: 0.063rem solid #292929;
+  border-bottom-left-radius: 2.25rem;
+  border-bottom-right-radius: 2.25rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bcard-footer ul {
+  display: flex;
+  align-items: center;
+}
+
+.bcard-footer ul li {
+  list-style: none;
+  margin-right: -0.625rem;
+  display: flex;
+}
+
+.bcard-footer ul li img {
+  width: 1.875rem;
+  height: 1.875rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.btn-add {
+  width: 1.375rem;
+  height: 1.375rem;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-add svg {
+  width: 1rem;
+}
+
+.btn-countdown {
+  background: #222127;
+  color: #fff;
+  border-radius: 2em;
+  padding: 0.625rem 1.5rem;
+}
+
+/* Color Variants */
+.bcard.green {
+  background: radial-gradient(ellipse at right top, #107667ed 0%, #151419 47%, #151419 100%);
+}
+
+.bcard.green::before {
+  background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-green)) border-box;
+}
+
+.bcard.green .btn-add {
+  background: var(--clr-green);
+}
+
+.bcard.green .progress-fill.green {
+  background: var(--clr-green);
+}
+
+.bcard.green .btn-countdown:hover {
+  background: var(--clr-green);
+}
+
+.bcard.blue {
+  background: radial-gradient(ellipse at right top, #00458f8f 0%, #151419 45%, #151419 100%);
+}
+
+.bcard.blue::before {
+  background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-blue)) border-box;
+}
+
+.bcard.blue .btn-add {
+  background: var(--clr-blue);
+}
+
+.bcard.blue .progress-fill.blue {
+  background: var(--clr-blue);
+}
+
+.bcard.blue .btn-countdown:hover {
+  background: var(--clr-blue);
+}
+
+.bcard.orange {
+  background: radial-gradient(ellipse at right top, #ffb74194 0%, #151419 47%, #151419 100%);
+}
+
+.bcard.orange::before {
+  background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-orange)) border-box;
+}
+
+.bcard.orange .btn-add {
+  background: var(--clr-orange);
+}
+
+.bcard.orange .progress-fill.orange {
+  background: var(--clr-orange);
+}
+
+.bcard.orange .btn-countdown:hover {
+  background: var(--clr-orange);
+}
+
+.bcard.red {
+  background: radial-gradient(ellipse at right top, #a63d2a82 0%, #151419 47%, #151419 100%);
+}
+
+.bcard.red::before {
+  background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-red)) border-box;
+}
+
+.bcard.red .btn-add {
+  background: var(--clr-red);
+}
+
+.bcard.red .progress-fill.red {
+  background: var(--clr-red);
+}
+
+.bcard.red .btn-countdown:hover {
+  background: var(--clr-red);
+}

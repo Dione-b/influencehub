@@ -1,15 +1,17 @@
 import { createContext, useContext, useMemo, useState } from 'react'
 import type {
   AttendanceRecord,
+  Badge,
   EventItem,
   Mission,
   MissionSubmission,
   SubmissionStatus,
 } from './types'
-import { MOCK_ATTENDANCE, MOCK_EVENTS, MOCK_MISSIONS, MOCK_SUBMISSIONS, MOCK_USERS } from './mockData'
+import { MOCK_ATTENDANCE, MOCK_EVENTS, MOCK_MISSIONS, MOCK_BADGES, MOCK_SUBMISSIONS, MOCK_USERS } from './mockData'
 
 interface DataContextValue {
   missions: Mission[]
+  badges: Badge[]
   events: EventItem[]
   submissions: MissionSubmission[]
   attendance: AttendanceRecord[]
@@ -17,6 +19,9 @@ interface DataContextValue {
   updateMission: (id: string, partial: Partial<Mission>) => void
   removeMission: (id: string) => void
   submitMission: (submission: Omit<MissionSubmission, 'id' | 'status' | 'date'> & { proofValue: string }) => void
+  addBadge: (badge: Omit<Badge, 'id'>) => void
+  updateBadge: (id: string, partial: Partial<Badge>) => void
+  removeBadge: (id: string) => void
   reviewSubmission: (id: string, status: SubmissionStatus, points: number, userId: string) => void
   addEvent: (event: Omit<EventItem, 'id'>) => void
   updateEvent: (id: string, partial: Partial<EventItem>) => void
@@ -28,6 +33,7 @@ const DataContext = createContext<DataContextValue | undefined>(undefined)
 
 export function DataProvider({ children }: { children: React.ReactNode }) {
   const [missions, setMissions] = useState<Mission[]>([...MOCK_MISSIONS])
+  const [badges, setBadges] = useState<Badge[]>([...MOCK_BADGES])
   const [events, setEvents] = useState<EventItem[]>([...MOCK_EVENTS])
   const [submissions, setSubmissions] = useState<MissionSubmission[]>([...MOCK_SUBMISSIONS])
   const [attendance, setAttendance] = useState<AttendanceRecord[]>([...MOCK_ATTENDANCE])
@@ -42,6 +48,18 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
   function removeMission(id: string) {
     setMissions((prev) => prev.filter((m) => m.id !== id))
+  }
+
+  function addBadge(badge: Omit<Badge, 'id'>) {
+    setBadges((prev) => [...prev, { ...badge, id: 'b' + (prev.length + 1) }])
+  }
+
+  function updateBadge(id: string, partial: Partial<Badge>) {
+    setBadges((prev) => prev.map((b) => (b.id === id ? { ...b, ...partial } : b)))
+  }
+
+  function removeBadge(id: string) {
+    setBadges((prev) => prev.filter((b) => b.id !== id))
   }
 
   function submitMission(submission: Omit<MissionSubmission, 'id' | 'status' | 'date'> & { proofValue: string }) {
@@ -105,6 +123,10 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     () => ({
       missions,
       events,
+      badges,
+      addBadge,
+      updateBadge,
+      removeBadge,
       submissions,
       attendance,
       addMission,
@@ -117,12 +139,13 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       removeEvent,
       checkin,
     }),
-    [missions, events, submissions, attendance],
+    [missions, events, badges, submissions, attendance],
   )
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useData() {
   const ctx = useContext(DataContext)
   if (!ctx) throw new Error('useData must be used within DataProvider')
