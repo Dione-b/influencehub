@@ -1,13 +1,12 @@
-import { useMemo, useCallback } from "react";
+import { useMemo } from "react";
 import { useAuth } from "../state/AuthContext";
 import { useData } from "../state/DataContext";
-import { UserCircle2, Trophy, CalendarCheck2, Target, Wallet } from "lucide-react";
+import { UserCircle2, Trophy, CalendarCheck2, Target } from "lucide-react";
 import { PageHeader, StatCard, EmptyState } from "../ui/Primitives";
-import { useFreighter } from "../hooks/useFreighter";
+import { StellarWalletButton } from "../ui/StellarWalletButton";
 
 export function ProfilePage() {
   const { user } = useAuth();
-  const { address, connect } = useFreighter();
   const { submissions, attendance, missions, events } = useData();
 
   const history = useMemo(() => {
@@ -27,18 +26,7 @@ export function ProfilePage() {
     return { completed, attended };
   }, [user, submissions, attendance, missions, events]);
 
-  const effectiveAddress = address ?? undefined;
-
   if (!user) return <div>Faça login para ver seu perfil.</div>;
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const handleConnectWallet = useCallback(async () => {
-    await connect();
-  }, [connect]);
-
-  const formatAddress = (address: string) => {
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
-  };
 
   return (
     <div className="space-y-6 page-root relative z-10">
@@ -48,7 +36,7 @@ export function ProfilePage() {
           <div>
             <div className="font-semibold">{user.name}</div>
             <div className="text-sm text-zinc-400">{user.email}</div>
-            <div className="text-xs mt-2 inline-block mt-4 px-2 py-0.5 rounded-full bg-zinc-800">
+            <div className="text-xs mt-2 inline-block px-2 py-0.5 rounded-full bg-zinc-800">
               {user.role === "ADMIN" ? "Administrador" : "Influenciador"}
             </div>
           </div>
@@ -60,9 +48,9 @@ export function ProfilePage() {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               ></path>
             </svg>
           </div>
@@ -79,16 +67,17 @@ export function ProfilePage() {
           value={history.completed.length}
         />
         <div className={`card flex items-center gap-3 border-yellow-400`}>
-          {/* {icon && <div className="text-yellow-400">{icon}</div>} */}
           <div>
-            <div className="text-xs text-zinc-400">Carteira</div>
-            <div className={`text-md font-extrabold text-yellow-400`}>
-              <button className="btn btn-primary mt-4" onClick={handleConnectWallet}>
-                {effectiveAddress !== undefined
-                ? formatAddress(effectiveAddress)
-                : "Vincular Carteira"}
-              </button>
-            </div>
+            <div className="text-xs text-zinc-400 mb-2">Carteira Stellar</div>
+            <StellarWalletButton 
+              onConnect={(response) => {
+                console.log("Wallet connected:", response.address);
+              }}
+              onDisconnect={() => {
+                console.log("Wallet disconnected");
+              }}
+              buttonText="Conectar Carteira"
+            />
           </div>
         </div>
       </div>

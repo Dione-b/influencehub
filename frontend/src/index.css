@@ -139,3 +139,115 @@ a:hover { filter: brightness(1.1); }
     --gradient-angle: 1turn;
   }
 }
+
+/* Stellar Wallets Kit Modal Overrides - Aggressive Scroll Removal */
+/* Target all possible modal containers */
+[data-stellar-wallets-kit-modal],
+.stellar-wallets-modal,
+.stellar-wallets-kit-modal,
+.wallet-modal,
+.wallet-connection-modal,
+[class*="wallet"][class*="modal"],
+[class*="stellar"][class*="modal"],
+div[style*="position: fixed"],
+div[style*="z-index"] {
+  overflow: hidden !important;
+  max-height: 100vh !important;
+}
+
+/* Target all modal content and children */
+[data-stellar-wallets-kit-modal] *,
+.stellar-wallets-modal *,
+.stellar-wallets-kit-modal *,
+.wallet-modal *,
+.wallet-connection-modal *,
+[class*="wallet"][class*="modal"] *,
+[class*="stellar"][class*="modal"] *,
+div[style*="position: fixed"] *,
+div[style*="z-index"] * {
+  overflow: visible !important;
+  max-height: none !important;
+  overflow-y: visible !important;
+  overflow-x: visible !important;
+}
+
+/* Specific targeting for common modal elements */
+.modal-content,
+.modal-body,
+.modal-dialog,
+.modal-container,
+.wallet-list,
+.wallet-options,
+.wallet-grid,
+.wallet-item,
+.wallet-button,
+.wallet-option,
+.wallet-selector,
+.wallet-connect,
+.wallet-connection,
+.wallet-picker,
+.wallet-chooser {
+  overflow: visible !important;
+  max-height: none !important;
+  overflow-y: visible !important;
+  overflow-x: visible !important;
+}
+
+/* Target any element with scroll-related styles */
+*[style*="overflow"],
+*[style*="max-height"],
+*[style*="height"] {
+  overflow: visible !important;
+  max-height: none !important;
+  overflow-y: visible !important;
+  overflow-x: visible !important;
+}
+
+/* Force remove scrollbars globally for wallet modals */
+body:has([data-stellar-wallets-kit-modal]),
+body:has(.stellar-wallets-modal),
+body:has(.wallet-modal) {
+  overflow: hidden !important;
+}
+
+/* Target the specific modal structure */
+div[role="dialog"],
+div[aria-modal="true"],
+div[data-modal],
+div[data-dialog] {
+  overflow: hidden !important;
+}
+
+div[role="dialog"] *,
+div[aria-modal="true"] *,
+div[data-modal] *,
+div[data-dialog] * {
+  overflow: visible !important;
+  max-height: none !important;
+  overflow-y: visible !important;
+  overflow-x: visible !important;
+}
+
+/* Nuclear option - target any element that might have a scrollbar */
+* {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Target any fixed positioned element that might be a modal */
+div[style*="position: fixed"][style*="z-index"] {
+  overflow: hidden !important;
+}
+
+div[style*="position: fixed"][style*="z-index"] * {
+  overflow: visible !important;
+  max-height: none !important;
+  overflow-y: visible !important;
+  overflow-x: visible !important;
+}
