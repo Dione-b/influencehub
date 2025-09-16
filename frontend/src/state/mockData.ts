@@ -1,4 +1,4 @@
-import type { AttendanceRecord, EventItem, Mission, MissionSubmission, UserProfile } from './types'
+import type { AttendanceRecord, Badge, EventItem, Mission, MissionSubmission, UserProfile } from './types'
 
 export const MOCK_USERS: UserProfile[] = [
   {
@@ -84,6 +84,49 @@ export const MOCK_MISSIONS: Mission[] = [
     points: 250,
     status: 'ativa',
   },
+]
+
+export const MOCK_BADGES: Badge[] = [
+  {
+    id: "b1",
+    title: "ESTRELA EM ASCENSÃO",
+    subtitle: "Alcance 10k seguidores",
+    progress: 85,
+    daysLeft: 5,
+    rarity: "epic",
+  },
+  {
+    id: "b2",
+    title: "ENGAGEMENT PRO",
+    subtitle: "Média de 15% de engagement",
+    progress: 92,
+    daysLeft: 3,
+    rarity: "legendary",
+  },
+  {
+    id: "b3",
+    title: "CONSISTENCY KING",
+    subtitle: "20 publicações em 30 dias",
+    progress: 75,
+    daysLeft: 12,
+    rarity: "rare",
+  },
+  {
+    id: "b4",
+    title: "TREND SETTER",
+    subtitle: "Crie 5 conteúdos virais",
+    progress: 60,
+    daysLeft: 8,
+    rarity: "epic",
+  },
+  {
+    id: "b5",
+    title: "BRAND MAGNET",
+    subtitle: "Feche pelo menos 3 parcerias",
+    progress: 100,
+    daysLeft: 0,
+    rarity: "legendary",
+  }
 ]
 
 export const MOCK_EVENTS: EventItem[] = [
