@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { Wallet, ChevronDown, AlertCircle } from 'lucide-react';
 import { useFreighter } from '../hooks/useFreighter';
+import { useTranslation } from '../i18n/hooks/useTranslation';
 
 interface WalletConnectionProps {
   onConnect?: (address: string) => void;
@@ -24,6 +25,7 @@ export function WalletConnection({
     loading, 
     error 
   } = useFreighter();
+  const { t } = useTranslation();
   
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -106,7 +108,7 @@ export function WalletConnection({
           className="btn btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Wallet size={16} />
-          {loading ? 'Conectando...' : 'Conectar Carteira'}
+          {loading ? t('wallet.connecting') : t('profile.connectWallet')}
           {showWalletList && availableWallets.length > 1 && (
             <ChevronDown size={16} />
           )}
@@ -115,7 +117,7 @@ export function WalletConnection({
         {showDropdown && showWalletList && availableWallets.length > 1 && (
           <div className="absolute top-full left-0 mt-2 w-64 bg-zinc-800 border border-zinc-700 rounded-lg shadow-lg z-50">
             <div className="p-2">
-              <div className="text-xs text-zinc-400 mb-2 px-2">Escolha uma carteira:</div>
+              <div className="text-xs text-zinc-400 mb-2 px-2">{t('wallet.chooseWallet')}</div>
               {availableWallets.map((wallet) => (
                 <button
                   key={wallet.id}

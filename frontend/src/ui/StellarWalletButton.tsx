@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useFreighter } from '../hooks/useFreighter';
+import { useTranslation } from '../i18n/hooks/useTranslation';
 
 interface StellarWalletButtonProps {
   onConnect?: (response: { address: string }) => void;
@@ -13,11 +14,13 @@ export function StellarWalletButton({
   onConnect, 
   onDisconnect, 
   horizonUrl,
-  buttonText = "Conectar Carteira",
+  buttonText,
   className = ""
 }: StellarWalletButtonProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { createWalletButton } = useFreighter();
+  const { t } = useTranslation();
+  const resolvedText = buttonText ?? t('profile.connectWallet');
 
   useEffect(() => {
     if (containerRef.current) {
@@ -25,10 +28,10 @@ export function StellarWalletButton({
         onConnect,
         onDisconnect,
         horizonUrl,
-        buttonText,
+        buttonText: resolvedText,
       });
     }
-  }, [createWalletButton, onConnect, onDisconnect, horizonUrl, buttonText]);
+  }, [createWalletButton, onConnect, onDisconnect, horizonUrl, resolvedText]);
 
   return <div ref={containerRef} className={className} />;
 }

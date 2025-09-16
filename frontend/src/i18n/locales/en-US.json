@@ -44,7 +44,8 @@
     "checkin": "Check-in",
     "quickLinks": "Quick Links",
     "contact": "Contact",
-    "allRightsReserved": "All rights reserved"
+    "allRightsReserved": "All rights reserved",
+    "add": "Add"
   },
   "landing": {
     "officialProgram": "Official Program",
@@ -109,10 +110,14 @@
     "passwordRequired": "Password is required",
     "passwordMinLength": "Password must have at least 6 characters",
     "passwordsDontMatch": "Passwords don't match",
-    "nameRequired": "Name is required"
+    "nameRequired": "Name is required",
+    "emailAlreadyUsed": "Email already in use",
+    "createAccount": "Create your account",
+    "joinProgram": "Join the influencer program."
   },
   "dashboard": {
     "welcome": "Welcome",
+    "subtitle": "Welcome to your influencer dashboard.",
     "totalPoints": "Total points",
     "missionsCompleted": "Missions completed",
     "eventsAttended": "Events attended",
@@ -126,8 +131,17 @@
     "viewEvents": "View events",
     "viewRanking": "View ranking"
   },
+  "badges": {
+    "title": "Badges",
+    "create": "Create badge",
+    "titlePlaceholder": "Title",
+    "pointsPlaceholder": "Points",
+    "descriptionPlaceholder": "Description",
+    "noneInCategory": "No badges in this category"
+  },
   "missions": {
     "title": "Missions",
+    "availableTitle": "Available Missions",
     "available": "Available",
     "completed": "Completed",
     "pending": "Pending",
@@ -146,7 +160,19 @@
     "noMissions": "No missions found",
     "missionSubmitted": "Mission submitted successfully!",
     "missionUpdated": "Mission updated successfully!",
-    "missionDeleted": "Mission deleted successfully!"
+    "missionDeleted": "Mission deleted successfully!",
+    "submitMission": "Submit mission",
+    "active": "Active",
+    "closed": "Closed",
+    "all": "All",
+    "create": "Create mission",
+    "titlePlaceholder": "Title",
+    "pointsPlaceholder": "Points",
+    "descriptionPlaceholder": "Description",
+    "event": "event",
+    "noneInCategory": "No missions in this category",
+    "close": "Close",
+    "reopen": "Reopen"
   },
   "events": {
     "title": "Events",
@@ -163,9 +189,48 @@
     "checkinSuccess": "Check-in successful!",
     "checkinError": "Error during check-in",
     "noEvents": "No events found",
+    "available": "Available events",
+    "noneNow": "No events available at the moment",
     "eventCreated": "Event created successfully!",
     "eventUpdated": "Event updated successfully!",
     "eventDeleted": "Event deleted successfully!"
+  },
+  "approvals": {
+    "title": "Mission Approvals",
+    "onlyAdmins": "Admins only.",
+    "nonePending": "No pending submissions.",
+    "id": "ID",
+    "userId": "UserID",
+    "proof": "Proof",
+    "status": "Status",
+    "approveBtn": "Approve",
+    "rejectBtn": "Reject",
+    "approveSuccess": "Mission approved",
+    "rejectSuccess": "Submission rejected"
+  },
+  "submissions": {
+    "loginToSubmit": "Please login to submit missions.",
+    "sentForApproval": "Submission sent for approval",
+    "submitError": "Error submitting mission",
+    "alreadySubmitted": "You have already submitted this mission before",
+    "title": "Submit mission",
+    "selectMission": "Select a mission",
+    "proof": {
+      "link": "link",
+      "text": "text",
+      "image": "image",
+      "placeholder": "Paste the link, write the text, or file name"
+    }
+  },
+  "checkin": {
+    "loginToCheckin": "Please login to check in.",
+    "success": "Check-in registered for event {{event}}",
+    "invalidCode": "Invalid code",
+    "title": "Event Check-in",
+    "description": "Check in to events to earn points.",
+    "withCode": "Check-in with Code",
+    "codePlaceholder": "Enter the event code",
+    "doCheckin": "Do Check-in"
   },
   "ranking": {
     "title": "Ranking",
@@ -195,6 +260,7 @@
     "statistics": "Statistics",
     "editProfile": "Edit profile",
     "saveChanges": "Save changes",
+    "connectWallet": "Connect Wallet",
     "profileUpdated": "Profile updated successfully!",
     "avatar": "Avatar",
     "bio": "Bio",
@@ -232,5 +298,13 @@
     "pleaseTryAgain": "Please try again",
     "sessionExpired": "Session expired",
     "pleaseLogin": "Please login again"
+  }
+  ,
+  "wallet": {
+    "freighterNotInstalled": "Freighter is not installed. Install the extension to continue.",
+    "cannotGetAddress": "Could not get wallet address.",
+    "connecting": "Connecting...",
+    "chooseWallet": "Choose a wallet:",
+    "modalTitle": "Connect Stellar Wallet"
   }
 }

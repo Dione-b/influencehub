@@ -5,11 +5,13 @@ import { useData } from '../state/DataContext'
 import type { Mission, MissionStatus, MissionType } from '../state/types'
 import { Target } from 'lucide-react'
 import { PageHeader, Badge, EmptyState } from '../ui/Primitives'
+import { useTranslation } from '../i18n/hooks/useTranslation'
 
 export function MissionsPage() {
   const { user } = useAuth()
   const { missions, addMission, updateMission, removeMission } = useData()
   const [filter, setFilter] = useState<'ativas' | 'todas'>('ativas')
+  const { t } = useTranslation()
 
   const visible = useMemo(() => missions.filter((m) => (filter === 'ativas' ? m.status === 'ativa' : true)), [missions, filter])
 
@@ -38,37 +40,37 @@ export function MissionsPage() {
   return (
     <div className="space-y-6 page-root relative z-10">
       <div className="flex items-center justify-between">
-        <PageHeader icon={<Target />} title="Missões Disponíveis" />
+        <PageHeader icon={<Target />} title={t('missions.availableTitle')} />
         <div className="flex gap-2 text-sm">
-          <button className={`btn btn-primary`} onClick={() => window.location.href = '/app/submissoes'}>Submeter missão</button>
-          <button className={`btn ${filter === 'ativas' ? 'btn-primary' : 'bg-zinc-900'}`} onClick={() => setFilter('ativas')}>Ativas</button>
-          <button className={`btn ${filter === 'todas' ? 'btn-primary' : 'bg-zinc-900'}`} onClick={() => setFilter('todas')}>Todas</button>
+          <button className={`btn btn-primary`} onClick={() => window.location.href = '/app/submissoes'}>{t('missions.submitMission')}</button>
+          <button className={`btn ${filter === 'ativas' ? 'btn-primary' : 'bg-zinc-900'}`} onClick={() => setFilter('ativas')}>{t('missions.active')}</button>
+          <button className={`btn ${filter === 'todas' ? 'btn-primary' : 'bg-zinc-900'}`} onClick={() => setFilter('todas')}>{t('missions.all')}</button>
         </div>
       </div>
 
       {isAdmin && (
         <div className="card p-4">
-          <h2 className="font-semibold mb-2">Criar missão</h2>
+          <h2 className="font-semibold mb-2">{t('missions.create')}</h2>
           <form className="grid grid-cols-1 md:grid-cols-6 gap-3 items-end" onSubmit={onCreate}>
-            <input name="title" className="input md:col-span-2 text-sm py-2" placeholder="Título" required />
-            <input name="points" className="input text-sm py-2" placeholder="Pontuação" type="number" min={0} required />
-            <input name="description" className="input md:col-span-3 text-sm py-2" placeholder="Descrição" required />
+            <input name="title" className="input md:col-span-2 text-sm py-2" placeholder={t('missions.titlePlaceholder')} required />
+            <input name="points" className="input text-sm py-2" placeholder={t('missions.pointsPlaceholder')} type="number" min={0} required />
+            <input name="description" className="input md:col-span-3 text-sm py-2" placeholder={t('missions.descriptionPlaceholder')} required />
             <select name="type" className="input text-sm py-2">
               <option value="social">social</option>
-              <option value="evento">evento</option>
+              <option value="evento">{t('missions.event')}</option>
             </select>
             <select name="status" className="input text-sm py-2">
-              <option value="ativa">ativa</option>
-              <option value="encerrada">encerrada</option>
+              <option value="ativa">{t('missions.active')}</option>
+              <option value="encerrada">{t('missions.closed')}</option>
             </select>
-            <button className="btn btn-primary text-sm py-2 md:col-span-2" type="submit">Adicionar</button>
+            <button className="btn btn-primary text-sm py-2 md:col-span-2" type="submit">{t('common.add')}</button>
           </form>
         </div>
       )}
 
       <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
         {visible.length === 0 ? (
-          <EmptyState title="Nenhuma missão nessa categoria" />
+          <EmptyState title={t('missions.noneInCategory')} />
         ) : visible.map((m) => (
           <div key={m.id} className={`border border-zinc-800 rounded-xl p-4 flex flex-col gap-2 ${m.status === 'encerrada' ? 'bg-zinc-600 opacity-75' : 'bg-zinc-900'}`}>
             <div className="flex items-center justify-between">
@@ -83,9 +85,9 @@ export function MissionsPage() {
             {isAdmin && (
               <div className="flex gap-2 mt-2">
                 <button className="btn bg-zinc-800 text-xs py-2" onClick={() => updateMission(m.id, { status: m.status === 'ativa' ? 'encerrada' : 'ativa' })}>
-                  {m.status === 'ativa' ? 'Encerrar' : 'Reabrir'}
+                  {m.status === 'ativa' ? t('missions.close') : t('missions.reopen')}
                 </button>
-                <button className="btn bg-red-600 text-xs py-2" onClick={() => removeMission(m.id)}>Excluir</button>
+                <button className="btn bg-red-600 text-xs py-2" onClick={() => removeMission(m.id)}>{t('common.delete')}</button>
               </div>
             )}
           </div>

@@ -313,7 +313,7 @@ export function LandingPage() {
             <div>
               <h3 className="font-semibold mb-4">{t("common.contact")}</h3>
               <div className="space-y-2 text-sm text-zinc-400">
-                <div>contato@influencehub.com</div>
+                <div>contato@influencehub.life</div>
               </div>
             </div>
           </div>

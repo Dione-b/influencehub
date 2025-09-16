@@ -4,12 +4,14 @@ import { useAuth } from '../state/AuthContext'
 import { useData } from '../state/DataContext'
 import type { Badge, BadgeRarity } from '../state/types'
 import { SquareStar } from 'lucide-react'
+import { useTranslation } from '../i18n/hooks/useTranslation'
 import { PageHeader, EmptyState } from '../ui/Primitives'
 import BadgeCard from '../ui/BadgeCard'
 
 export function BadgesPage() {
   const { user } = useAuth()
   const { badges, addBadge } = useData()
+  const { t } = useTranslation()
 
   const isAdmin = user?.role === 'ADMIN'
 
@@ -43,32 +45,32 @@ export function BadgesPage() {
   return (
     <div className="space-y-6 page-root relative z-10">
       <div className="flex items-center justify-between">
-        <PageHeader icon={<SquareStar />} title="Emblemas" />
+        <PageHeader icon={<SquareStar />} title={t('badges.title')} />
       </div>
 
       {isAdmin && (
         <div className="card p-4">
-          <h2 className="font-semibold mb-2">Criar emblema</h2>
+          <h2 className="font-semibold mb-2">{t('badges.create')}</h2>
           <form className="grid grid-cols-1 md:grid-cols-6 gap-3 items-end" onSubmit={onCreate}>
-            <input name="title" className="input md:col-span-2 text-sm py-2" placeholder="Título" required />
-            <input name="points" className="input text-sm py-2" placeholder="Pontuação" type="number" min={0} required />
-            <input name="description" className="input md:col-span-3 text-sm py-2" placeholder="Descrição" required />
+            <input name="title" className="input md:col-span-2 text-sm py-2" placeholder={t('badges.titlePlaceholder')} required />
+            <input name="points" className="input text-sm py-2" placeholder={t('badges.pointsPlaceholder')} type="number" min={0} required />
+            <input name="description" className="input md:col-span-3 text-sm py-2" placeholder={t('badges.descriptionPlaceholder')} required />
             <select name="type" className="input text-sm py-2">
               <option value="social">social</option>
-              <option value="evento">evento</option>
+              <option value="evento">{t('missions.event')}</option>
             </select>
             <select name="status" className="input text-sm py-2">
-              <option value="ativa">ativa</option>
-              <option value="encerrada">encerrada</option>
+              <option value="ativa">{t('missions.active')}</option>
+              <option value="encerrada">{t('missions.closed')}</option>
             </select>
-            <button className="btn btn-primary text-sm py-2 md:col-span-2" type="submit">Adicionar</button>
+            <button className="btn btn-primary text-sm py-2 md:col-span-2" type="submit">{t('common.add')}</button>
           </form>
         </div>
       )}
 
       <div className='grid md:grid-cols-3 lg:grid-cols-5 gap-6'>
         {badges.length === 0 ? (
-          <EmptyState title="Nenhum emblema nessa categoria" />
+          <EmptyState title={t('badges.noneInCategory')} />
         ) : badges.map((badge) => (
           <BadgeCard color={defineBadgeColor(badge.rarity)} title={badge.title} subtitle={badge.subtitle} progress={badge.progress} daysLeft={badge.daysLeft}/>
         ))}
