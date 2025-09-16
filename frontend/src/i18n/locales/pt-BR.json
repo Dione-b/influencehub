@@ -140,7 +140,13 @@
     "titlePlaceholder": "Título",
     "pointsPlaceholder": "Pontuação",
     "descriptionPlaceholder": "Descrição",
-    "noneInCategory": "Nenhum emblema nessa categoria"
+    "noneInCategory": "Nenhum emblema nessa categoria",
+    "rarity": {
+      "common": "Comum",
+      "uncommon": "Incomum",
+      "epic": "Épico",
+      "legendary": "Lendário"
+    }
   },
   "missions": {
     "title": "Missões",
@@ -223,6 +229,12 @@
       "text": "texto",
       "image": "imagem",
       "placeholder": "Cole o link, escreva o texto ou nome do arquivo"
+    },
+    "howItWorks": {
+      "title": "Como funciona?",
+      "step1": "Escolha a missão que você completou",
+      "step2": "Selecione o tipo de prova (link, texto ou imagem)",
+      "step3": "Envie a prova e aguarde aprovação do admin"
     }
   },
   "checkin": {
@@ -277,7 +289,8 @@
     "missionsHistory": "Histórico de missões",
     "eventsHistory": "Histórico de eventos",
     "noHistory": "Você ainda não completou missões.",
-    "noEvents": "Você ainda não participou de eventos."
+    "noEvents": "Você ainda não participou de eventos.",
+    "onchainReputation": "Reputação on-chain"
   },
   "admin": {
     "title": "Administração",
@@ -313,6 +326,7 @@
     "cannotGetAddress": "Não foi possível obter o endereço da carteira.",
     "connecting": "Conectando...",
     "chooseWallet": "Escolha uma carteira:",
-    "modalTitle": "Conectar Carteira Stellar"
+    "modalTitle": "Conectar Carteira Stellar",
+    "disconnect": "Desconectar"
   }
 }

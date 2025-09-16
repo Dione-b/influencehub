@@ -1,15 +1,21 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../state/AuthContext";
 import { useData } from "../state/DataContext";
-import { UserCircle2, Trophy, CalendarCheck2, Target } from "lucide-react";
+import { UserCircle2, Trophy, CalendarCheck2, Target, Info } from "lucide-react";
 import { PageHeader, StatCard, EmptyState } from "../ui/Primitives";
 import { KitModalConnectButton } from "../ui/StellarWalletButton";
 import { useTranslation } from "../i18n/hooks/useTranslation";
+import { useStellarWalletContext } from "../state/StellarWalletContext";
+import { getReputationLevel } from "../soroban/reputationClient";
 
 export function ProfilePage() {
   const { user } = useAuth();
   const { submissions, attendance, missions, events } = useData();
   const { t } = useTranslation();
+  const { address } = useStellarWalletContext();
+  const [onchainLevel, setOnchainLevel] = useState<number | string>("-");
+  const [repLoading, setRepLoading] = useState(false);
+  const [onchainXP, setOnchainXP] = useState<number | string>("-");
 
   const history = useMemo(() => {
     if (!user) return { completed: [], attended: [] as string[] };
@@ -28,12 +34,38 @@ export function ProfilePage() {
     return { completed, attended };
   }, [user, submissions, attendance, missions, events]);
 
+  useEffect(() => {
+    let cancelled = false;
+    const load = async () => {
+      if (!address) {
+        setOnchainLevel("-");
+        return;
+      }
+      setRepLoading(true);
+      try {
+        const level = await getReputationLevel(address);
+        const numericLevel = Number((level as any)?.toString?.() ?? level);
+        if (!cancelled) {
+          setOnchainLevel(Number.isFinite(numericLevel) ? numericLevel : "-");
+          // Optional: derive a simple XP estimate for clarity (e.g., Level * 100 XP)
+          setOnchainXP(Number.isFinite(numericLevel) ? numericLevel * 100 : "-");
+        }
+      } catch (e) {
+        if (!cancelled) setOnchainLevel("-");
+      } finally {
+        if (!cancelled) setRepLoading(false);
+      }
+    };
+    load();
+    return () => { cancelled = true; };
+  }, [address]);
+
   if (!user) return <div>{t('profile.loginToView')}</div>;
 
   return (
     <div className="space-y-6 page-root relative z-10">
       <PageHeader icon={<UserCircle2 />} title={t('profile.title')} />
-      <div className="grid md:grid-cols-4 gap-4">
+      <div className="grid md:grid-cols-5 gap-4">
         <div className="card flex justify-between">
           <div>
             <div className="font-semibold">{user.name}</div>
@@ -68,6 +100,20 @@ export function ProfilePage() {
           label={t('dashboard.missionsCompleted')}
           value={history.completed.length}
         />
+        <div className="card flex items-center gap-3">
+          <div className="text-yellow-400"><Target /></div>
+          <div>
+            <div className="text-xs text-zinc-400 flex items-center gap-2">
+              {t('profile.onchainReputation')}
+              <span className="inline-flex items-center gap-1 text-[10px] text-zinc-500">
+                <Info size={12} />
+                Level × 100 = XP (view only)
+              </span>
+            </div>
+            <div className="text-2xl font-extrabold">{repLoading ? '...' : onchainLevel}</div>
+            <div className="text-[11px] text-zinc-400">{repLoading ? '' : `≈ ${onchainXP} XP`}</div>
+          </div>
+        </div>
         <div className={`card flex items-center gap-3 border-yellow-400`}>
           <div>
             <div className="text-xs text-zinc-400">Stellar Wallet</div>

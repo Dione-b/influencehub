@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Wallet, ChevronDown, AlertCircle } from 'lucide-react';
+import { Wallet, ChevronDown, AlertCircle, LogOut } from 'lucide-react';
 import { useFreighter } from '../hooks/useFreighter';
 import { useTranslation } from '../i18n/hooks/useTranslation';
 
@@ -84,9 +84,11 @@ export function WalletConnection({
         </div>
         <button
           onClick={handleDisconnect}
-          className="px-3 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-900/20 rounded-lg transition-colors"
+          aria-label={t('wallet.disconnect') || 'Disconnect'}
+          className="inline-flex items-center gap-2 px-3 py-2 text-sm border border-red-500/30 text-red-300 rounded-lg hover:bg-red-900/30 hover:border-red-400/40 transition-colors"
         >
-          Desconectar
+          <LogOut size={16} />
+          {t('wallet.disconnect') || 'Disconnect'}
         </button>
       </div>
     );

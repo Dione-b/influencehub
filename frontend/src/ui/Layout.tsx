@@ -19,7 +19,7 @@ export function Layout() {
       <aside className="bg-black/80 backdrop-blur border-r border-zinc-900 flex flex-col">
         <div className="px-6 py-6">
           <Link to="/" className="block">
-            <div className="text-2xl leading-tight font-extrabold text-yellow-400">InfluenceHub<br/></div>
+            <img src="/logo.jpeg" alt="Logo" className="h-14 w-auto object-contain" />
           </Link>
           {user && (
             <div className="mt-4 text-sm">
@@ -52,7 +52,6 @@ export function Layout() {
         </nav>
         {user && (
           <div className="m-4 space-y-2">
-            <LanguageSelector />
             <button onClick={handleLogout} className="w-full flex items-center gap-2 text-red-400 hover:text-red-300 text-sm">
               <LogOut size={16} /> {t('common.logout')}
             </button>
@@ -60,6 +59,10 @@ export function Layout() {
         )}
       </aside>
       <main className="p-8 relative z-10">
+        {/* Top bar actions */}
+        <div className="flex items-center justify-end mb-4">
+          <LanguageSelector />
+        </div>
         <Outlet />
       </main>
     </div>
