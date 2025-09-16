@@ -9,13 +9,13 @@
   },
   "dependencies": {
     "@stellar/stellar-sdk": "^14.1.1",
-    "buffer": "6.0.3"
-  },
-  "devDependencies": {
     "@types/node": "^24.5.0",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
-    "typescript": "^5.6.2",
+    "buffer": "6.0.3",
     "vite": "^7.1.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.2"
   }
 }
