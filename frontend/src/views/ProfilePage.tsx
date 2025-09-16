@@ -3,7 +3,7 @@ import { useAuth } from "../state/AuthContext";
 import { useData } from "../state/DataContext";
 import { UserCircle2, Trophy, CalendarCheck2, Target } from "lucide-react";
 import { PageHeader, StatCard, EmptyState } from "../ui/Primitives";
-import { StellarWalletButton } from "../ui/StellarWalletButton";
+import { KitModalConnectButton } from "../ui/StellarWalletButton";
 import { useTranslation } from "../i18n/hooks/useTranslation";
 
 export function ProfilePage() {
@@ -71,14 +71,14 @@ export function ProfilePage() {
         <div className={`card flex items-center gap-3 border-yellow-400`}>
           <div>
             <div className="text-xs text-zinc-400">Stellar Wallet</div>
-            <StellarWalletButton 
+            <KitModalConnectButton
+              className="mt-1"
               onConnect={(response) => {
-                console.log("Wallet connected:", response.address);
+                console.log('Wallet connected:', response.address);
               }}
               onDisconnect={() => {
-                console.log("Wallet disconnected");
+                console.log('Wallet disconnected');
               }}
-              buttonText={t('profile.connectWallet')}
             />
           </div>
         </div>

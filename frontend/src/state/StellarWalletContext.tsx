@@ -76,6 +76,26 @@ export const StellarWalletProvider: React.FC<{ children: React.ReactNode }> = ({
     availableWallets: [],
   });
 
+  // Keep a persistent reference to the created wallet button element (singleton managed by the kit)
+  const buttonElementRef = React.useRef<HTMLElement | null>(null);
+  // Global guard to avoid multiple createButton calls across mounts (React Strict Mode, route remounts)
+  const kitButtonCreatedRef = React.useRef<boolean>(false);
+
+  const findGlobalButton = () => {
+    if (typeof document === 'undefined') return null;
+    return document.querySelector('[data-stellar-wallets-kit-button]') as HTMLElement | null;
+  };
+
+  const attachButtonToContainer = (buttonEl: HTMLElement, container: HTMLElement) => {
+    if (buttonEl.parentElement !== container) {
+      container.appendChild(buttonEl);
+    }
+    // Ensure we keep a stable reference
+    buttonElementRef.current = buttonEl;
+    // Mark created guard in case attribute is missing but the element exists
+    kitButtonCreatedRef.current = true;
+  };
+
   // Initialize the Stellar Wallets Kit
   const kit = useMemo(() => {
     return new StellarWalletsKit({
@@ -353,10 +373,34 @@ export const StellarWalletProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   ) => {
     try {
-      // Check if button already exists
-      const existingButton = container.querySelector('[data-stellar-wallets-kit-button]');
-      if (existingButton) {
-        console.log('Wallet button already exists, skipping creation');
+      // 1) If the container already has the button, remember it and exit
+      const existingInContainer = container.querySelector('[data-stellar-wallets-kit-button]') as HTMLElement | null;
+      if (existingInContainer) {
+        attachButtonToContainer(existingInContainer, container);
+        return;
+      }
+
+      // 2) If we already know the button element from a previous creation, move it here
+      if (buttonElementRef.current) {
+        attachButtonToContainer(buttonElementRef.current, container);
+        return;
+      }
+
+      // 3) Try to find any existing button in the DOM and move it into container
+      const globalExistingButton = findGlobalButton();
+      if (globalExistingButton) {
+        attachButtonToContainer(globalExistingButton, container);
+        return;
+      }
+
+      // 4) If we believe a button was already created (Strict Mode remounts), do not call createButton again
+      if (kitButtonCreatedRef.current) {
+        console.log('Wallet button previously created; waiting for DOM to expose it.');
+        // As a fallback, try again on next tick to locate and attach the element if the kit renders it asynchronously
+        setTimeout(() => {
+          const laterButton = findGlobalButton();
+          if (laterButton) attachButtonToContainer(laterButton, container);
+        }, 0);
         return;
       }
 
@@ -388,9 +432,32 @@ export const StellarWalletProvider: React.FC<{ children: React.ReactNode }> = ({
         horizonUrl: options?.horizonUrl,
         buttonText: options?.buttonText || ((typeof window !== 'undefined' ? (window as any).i18next?.t?.('profile.connectWallet') : undefined) || 'Connect Wallet'),
       });
+
+      // After creation, capture the element reference for future reattachments
+      const created = container.querySelector('[data-stellar-wallets-kit-button]') as HTMLElement | null;
+      if (created) {
+        attachButtonToContainer(created, container);
+      }
+      kitButtonCreatedRef.current = true;
     } catch (e: any) {
       if (e.message?.includes('already created')) {
-        console.log('Wallet button already exists, using existing one');
+        // Button exists; attempt to attach any known/global button to this container and exit without re-creating
+        kitButtonCreatedRef.current = true;
+        const known = buttonElementRef.current;
+        if (known) {
+          attachButtonToContainer(known, container);
+          return;
+        }
+        const globalExistingButton = findGlobalButton();
+        if (globalExistingButton) {
+          attachButtonToContainer(globalExistingButton, container);
+          return;
+        }
+        // If still not found, schedule a microtask to try again after the kit stabilizes
+        setTimeout(() => {
+          const laterButton = findGlobalButton();
+          if (laterButton) attachButtonToContainer(laterButton, container);
+        }, 0);
         return;
       }
       console.error("Error creating wallet button:", e);

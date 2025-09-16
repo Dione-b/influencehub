@@ -1,5 +1,4 @@
 import { createContext, useContext, useMemo, useState } from 'react'
-import { useTranslation } from '../i18n/hooks/useTranslation'
 import type {
   AttendanceRecord,
   Badge,

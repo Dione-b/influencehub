@@ -121,6 +121,9 @@
     "totalPoints": "Total points",
     "missionsCompleted": "Missions completed",
     "eventsAttended": "Events attended",
+    "recentCompleted": "Recently completed",
+    "noCompleted": "You haven't completed any missions yet.",
+    "completeMissionsHint": "Complete missions to start earning points.",
     "currentRank": "Current rank",
     "recentActivity": "Recent activity",
     "upcomingMissions": "Upcoming missions",
@@ -269,7 +272,12 @@
     "website": "Website",
     "socialMedia": "Social media",
     "joinedDate": "Join date",
-    "lastLogin": "Last login"
+    "lastLogin": "Last login",
+    "loginToView": "Please login to view your profile.",
+    "missionsHistory": "Missions history",
+    "eventsHistory": "Events history",
+    "noHistory": "You haven't completed any missions yet.",
+    "noEvents": "You haven't attended any events yet."
   },
   "admin": {
     "title": "Administration",
